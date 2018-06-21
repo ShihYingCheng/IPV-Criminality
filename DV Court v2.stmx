@@ -1,0 +1,2879 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xmile version="1.0" xmlns="http://docs.oasis-open.org/xmile/ns/XMILE/v1.0" xmlns:isee="http://iseesystems.com/XMILE">
+	<header>
+		<smile version="1.0" namespace="std, isee"/>
+		<name>DV Court v2</name>
+		<uuid>8d039feb-999f-46a9-ae9e-23bca4aa1966</uuid>
+		<vendor>isee systems, inc.</vendor>
+		<product version="1.6.2" isee:build_number="1445" isee:saved_by_v1="true" lang="en">Stella Architect</product>
+	</header>
+	<sim_specs isee:simulation_delay="0.142857" method="Euler" time_units="Years" isee:instantaneous_flows="false">
+		<start>2007</start>
+		<stop>2020</stop>
+		<dt>0.05</dt>
+	</sim_specs>
+	<isee:prefs show_module_prefix="true" show_restore_buttons="false" layer="model" saved_runs="5" keep="false" rifp="false"/>
+	<isee:multiplayer_settings include_chat="true" allow_observers="false" advance_time_increment="1" observer_start_page="home_page" enabled="false"/>
+	<isee:time_formats default_format="Builtin">
+		<isee:time_format name="Builtin" type="adaptive"/>
+	</isee:time_formats>
+	<default_format/>
+	<isee:sensi_specs_list active_index="0">
+		<isee:sensi_specs name="Sensitivity Analysis 1" method="multivariate" runs="0"/>
+	</isee:sensi_specs_list>
+	<model_units>
+		<unit name="Dimensionless">
+			<eqn>1</eqn>
+			<alias>dmnl</alias>
+			<alias>unitless</alias>
+		</unit>
+		<unit name="Years">
+			<eqn/>
+			<alias>yr</alias>
+			<alias>year</alias>
+		</unit>
+	</model_units>
+	<model>
+		<variables>
+			<aux name="New perpetration outside\nof the court system">
+				<eqn>200</eqn>
+				<units>Cases/year</units>
+			</aux>
+			<aux name="TC of IPV\ncriminality reporting">
+				<eqn>0.3</eqn>
+				<units>Years</units>
+			</aux>
+			<flow name="Wrongly decide\nto detain">
+				<eqn>(False_positive*(Proportion_of_decision_on_detention))/TC_of_decision_making</eqn>
+				<non_negative/>
+				<units>Cases/Years</units>
+			</flow>
+			<flow name="wrongly decide to release\non conditions">
+				<eqn>(False_positive*(1-Proportion_of_decision_on_detention))/TC_of_decision_making</eqn>
+				<non_negative/>
+				<units>Cases/Years</units>
+			</flow>
+			<flow name="Wrongly decide to\nrelease">
+				<eqn>False_negative/TC_of_decision_making</eqn>
+				<non_negative/>
+				<units>Cases/Years</units>
+			</flow>
+			<aux name="proportion of\nHR case">
+				<eqn>0.208</eqn>
+				<units>unitless</units>
+			</aux>
+			<aux name="Proportion of IPV\nincidents reported">
+				<eqn>0.35</eqn>
+				<units>Dimensionless</units>
+			</aux>
+			<flow name="Correctly assessed\nas HR">
+				<eqn>IPV_criminal_cases_in_Court*proportion_of_HR_case*validity_of_risk_assessment/TC_of_assessment</eqn>
+				<non_negative/>
+				<units>Cases/Years</units>
+			</flow>
+			<aux name="Proportion of\ndecision on detention">
+				<eqn>0.514</eqn>
+				<units>unitless</units>
+			</aux>
+			<flow name="Correctly assessed\nas LR">
+				<eqn>(IPV_criminal_cases_in_Court*(1-proportion_of_HR_case)*validity_of_risk_assessment)/TC_of_assessment</eqn>
+				<non_negative/>
+				<units>Cases/Years</units>
+			</flow>
+			<aux name="validity of risk\nassessment">
+				<eqn>0.55+Learn_from_wrong_risk_assessment</eqn>
+				<units>unitless</units>
+			</aux>
+			<flow name="Perpetration">
+				<eqn>((Proportion_of_resentment_due_to_experiencing_unfair_criminal_justice_system*(Active_cases_FP_D+Active_cases_FP_RR)+Proportion_of_resentment_due_to_partner&apos;s_reporting_criminality*(Active_cases_HR_D+Active_cases_FP_D+Active_cases_HR_RR+Active_cases_FP_RR+Active_cases_FN_R+Active_cases_LR_R)-Proportion_of_Deterrence*(Active_cases_HR_D+Active_cases_FP_D+Active_cases_HR_RR+Active_cases_FP_RR))/TC_of_perpetrating_a_new_assault)+New_perpetration_outside_of_the_court_system</eqn>
+				<non_negative/>
+				<units>Cases/Years</units>
+			</flow>
+			<aux name="Proportion of\nDeterrence">
+				<eqn>0.8</eqn>
+				<units>unitless</units>
+			</aux>
+			<aux name="TC of\ndecision making">
+				<eqn>0.83</eqn>
+				<units>Years</units>
+			</aux>
+			<flow name="decide to\ndetain">
+				<eqn>(HR_case*(Proportion_of_decision_on_detention))/TC_of_decision_making</eqn>
+				<non_negative/>
+				<units>Cases/Years</units>
+			</flow>
+			<aux name="TC of assessment">
+				<eqn>0.2</eqn>
+				<units>Years</units>
+			</aux>
+			<flow name="decide to release on\nconditions">
+				<eqn>(HR_case*(1-Proportion_of_decision_on_detention))/TC_of_decision_making</eqn>
+				<non_negative/>
+				<units>Cases/Years</units>
+			</flow>
+			<flow name="Wrongly assessed\nas LR">
+				<eqn>(IPV_criminal_cases_in_Court*proportion_of_HR_case*(1-validity_of_risk_assessment))/TC_of_assessment</eqn>
+				<non_negative/>
+				<units>Cases/Years</units>
+			</flow>
+			<flow name="IPV criminality report">
+				<eqn>IPV_incidents*Proportion_of_IPV_incidents_reported/(TC_of_IPV_criminality_reporting+TC_of_court_administration)</eqn>
+				<non_negative/>
+				<units>Cases/Years</units>
+			</flow>
+			<aux name="Proportion of resentment\ndue to experiencing\nunfair criminal justice system">
+				<eqn>0.6</eqn>
+				<units>unitless</units>
+			</aux>
+			<aux name="TC of perpetrating\na new assault">
+				<eqn>1</eqn>
+				<units>Years</units>
+			</aux>
+			<aux name="Proportion of resentment\ndue to partner's\nreporting criminality">
+				<eqn>0.5</eqn>
+				<units>unitless</units>
+			</aux>
+			<flow name="Wrongly assessed\nas HR">
+				<eqn>(IPV_criminal_cases_in_Court*(1-proportion_of_HR_case)*(1-validity_of_risk_assessment))/TC_of_assessment</eqn>
+				<non_negative/>
+				<units>Cases/Years</units>
+			</flow>
+			<flow name="decide to\nrelease">
+				<eqn>LR_case/TC_of_decision_making</eqn>
+				<non_negative/>
+				<units>Cases/Years</units>
+			</flow>
+			<stock name="IPV criminal\ncases in Court">
+				<doc>See reference mode</doc>
+				<eqn>Initial_value_of_IPV_criminal_cases_in_Court</eqn>
+				<inflow>IPV_criminality_report</inflow>
+				<outflow>Correctly_assessed_as_HR</outflow>
+				<outflow>Correctly_assessed_as_LR</outflow>
+				<outflow>Wrongly_assessed_as_HR</outflow>
+				<outflow>Wrongly_assessed_as_LR</outflow>
+				<non_negative/>
+				<units>Cases</units>
+			</stock>
+			<stock name="LR case">
+				<eqn>Initial_value_of_LR_case</eqn>
+				<inflow>Correctly_assessed_as_LR</inflow>
+				<outflow>decide_to_release</outflow>
+				<non_negative/>
+				<units>Cases</units>
+			</stock>
+			<stock name="HR case">
+				<eqn>Initial_value_of_HR_case</eqn>
+				<inflow>Correctly_assessed_as_HR</inflow>
+				<outflow>decide_to_detain</outflow>
+				<outflow>decide_to_release_on_conditions</outflow>
+				<non_negative/>
+				<units>Cases</units>
+			</stock>
+			<stock name="False positive">
+				<eqn>Initial_value_of_False_positives</eqn>
+				<inflow>Wrongly_assessed_as_HR</inflow>
+				<outflow>wrongly_decide_to_release_on_conditions</outflow>
+				<outflow>Wrongly_decide_to_detain</outflow>
+				<non_negative/>
+				<units>Cases</units>
+			</stock>
+			<stock name="IPV\nincidents">
+				<eqn>Initial_values_of_DV_incidents</eqn>
+				<inflow>Perpetration</inflow>
+				<outflow>&quot;Not-reported_IPV_incidents_being_inactive&quot;</outflow>
+				<non_negative/>
+				<units>Cases</units>
+			</stock>
+			<stock name="False negative">
+				<eqn>Initial_value_of_False_negatives</eqn>
+				<inflow>Wrongly_assessed_as_LR</inflow>
+				<outflow>Wrongly_decide_to_release</outflow>
+				<non_negative/>
+				<units>Cases</units>
+			</stock>
+			<flow name="Aggressor stops\nviolence and control (FN-R)">
+				<eqn>Unconditional_release_false_negative_case*Proportion_of_stopping_violence_and_control_HR/TC_of_stopping_violence_and_control</eqn>
+				<non_negative/>
+				<units>Cases/Years</units>
+			</flow>
+			<flow name="Aggressor replace violence\nwith coercive\ncontrol (LR-R)">
+				<eqn>Unconditional_release_LR_case*Proportion_of_replacing_violence_with_coercive_control_LR/TC_of_replacing_violence_with_coercive_control</eqn>
+				<non_negative/>
+				<units>Cases/Years</units>
+			</flow>
+			<flow name="Aggressor replace violence\nwith coercive control (HR-RR)">
+				<eqn>INT(Restricted_release_HR_case*Proportion_of_replacing_violence_with_coercive_control_HR/TC_of_replacing_violence_with_coercive_control)</eqn>
+				<non_negative/>
+				<units>Cases/Years</units>
+			</flow>
+			<flow name="Aggressor replace violence\nwith coercive control (HR-D)">
+				<eqn>Pretrial_detain_HR_case*Proportion_of_replacing_violence_with_coercive_control_HR/TC_of_replacing_violence_with_coercive_control</eqn>
+				<non_negative/>
+				<units>Cases/Years</units>
+			</flow>
+			<aux name="TC of replacing\nviolence with\ncoercive control">
+				<eqn>1.5</eqn>
+				<units>Years</units>
+			</aux>
+			<flow name="Aggressor stops\nviolence and control (HR-RR)">
+				<eqn>INT(Restricted_release_HR_case*Proportion_of_stopping_violence_and_control_HR/TC_of_stopping_violence_and_control)</eqn>
+				<non_negative/>
+				<units>Cases/Years</units>
+			</flow>
+			<flow name="Aggressor stops\nviolence and control (FP-D)">
+				<eqn>Pretrial_detain_false_positive_case*Proportion_of_stopping_violence_and_control_LR/TC_of_stopping_violence_and_control</eqn>
+				<non_negative/>
+				<units>Cases/Years</units>
+			</flow>
+			<aux name="Proportion of\nreplacing violence\nwith coercive control HR">
+				<eqn>0.7</eqn>
+				<units>Dimensionless</units>
+			</aux>
+			<aux name="TC of stopping violence and control">
+				<eqn>3</eqn>
+				<units>Years</units>
+			</aux>
+			<aux name="Proportion of stopping\nviolence and control HR">
+				<eqn>0.2</eqn>
+				<units>Dimensionless</units>
+			</aux>
+			<flow name="Aggressor stops\nviolence and control (HR-D)">
+				<eqn>Pretrial_detain_HR_case*Proportion_of_stopping_violence_and_control_HR/TC_of_stopping_violence_and_control</eqn>
+				<non_negative/>
+				<units>Cases/Years</units>
+			</flow>
+			<flow name="Aggressor stops\nviolence and control (FP-RR)">
+				<eqn>Restricted_release_false_positive_case*Proportion_of_stopping_violence_and_control_LR/TC_of_stopping_violence_and_control</eqn>
+				<non_negative/>
+				<units>Cases/Years</units>
+			</flow>
+			<flow name="Aggressor replace violence\nwith coercive control (FP-RR)">
+				<eqn>Restricted_release_false_positive_case*Proportion_of_replacing_violence_with_coercive_control_LR/TC_of_replacing_violence_with_coercive_control</eqn>
+				<non_negative/>
+				<units>Cases/Years</units>
+			</flow>
+			<flow name="Aggressor replace violence\nwith coercive\ncontrol (FN-R)">
+				<eqn>Unconditional_release_false_negative_case*Proportion_of_replacing_violence_with_coercive_control_HR/TC_of_replacing_violence_with_coercive_control</eqn>
+				<non_negative/>
+				<units>Cases/Years</units>
+			</flow>
+			<flow name="Aggressor replace violence\nwith coercive control (FP-D)">
+				<eqn>Pretrial_detain_false_positive_case*Proportion_of_replacing_violence_with_coercive_control_LR/TC_of_replacing_violence_with_coercive_control</eqn>
+				<non_negative/>
+				<units>Cases/Years</units>
+			</flow>
+			<flow name="Aggressor stops\nviolence and control (LR-R)">
+				<eqn>Unconditional_release_LR_case*Proportion_of_stopping_violence_and_control_LR/TC_of_stopping_violence_and_control</eqn>
+				<non_negative/>
+				<units>Cases/Years</units>
+			</flow>
+			<stock name="Unconditional\nrelease LR case">
+				<eqn>Initial_value_of_Unconditional_release_LR_case</eqn>
+				<inflow>decide_to_release</inflow>
+				<outflow>&quot;Aggressor_stops_violence_and_control_(LR-R)&quot;</outflow>
+				<outflow>&quot;Aggressor_replace_violence_with_coercive_control_(LR-R)&quot;</outflow>
+				<outflow>&quot;Aggressor_become_active_(LR-R)&quot;</outflow>
+				<non_negative/>
+				<units>Cases</units>
+			</stock>
+			<stock name="Restricted release\nHR case">
+				<eqn>Initial_value_of_Restricted_release_HR_case</eqn>
+				<inflow>decide_to_release_on_conditions</inflow>
+				<outflow>&quot;Aggressor_replace_violence_with_coercive_control_(HR-RR)&quot;</outflow>
+				<outflow>&quot;Aggressor_stops_violence_and_control_(HR-RR)&quot;</outflow>
+				<outflow>&quot;Aggressor_become_active_(HR-RR)&quot;</outflow>
+				<non_negative/>
+				<units>Cases</units>
+			</stock>
+			<stock name="Pretrial detain\nHR case">
+				<eqn>Initial_value_of_Pretrial_detain_HR_case</eqn>
+				<inflow>decide_to_detain</inflow>
+				<outflow>&quot;Aggressor_stops_violence_and_control_(HR-D)&quot;</outflow>
+				<outflow>&quot;Aggressor_replace_violence_with_coercive_control_(HR-D)&quot;</outflow>
+				<outflow>&quot;Aggressor_become_active_(HR-D)&quot;</outflow>
+				<non_negative/>
+				<units>Cases</units>
+			</stock>
+			<stock name="Pretrial detain\nfalse positive case">
+				<eqn>Initial_value_of_Pretrial_detain_false_positives</eqn>
+				<inflow>Wrongly_decide_to_detain</inflow>
+				<outflow>&quot;Aggressor_stops_violence_and_control_(FP-D)&quot;</outflow>
+				<outflow>&quot;Aggressor_replace_violence_with_coercive_control_(FP-D)&quot;</outflow>
+				<outflow>&quot;Aggressor_become_active_(FP-D)&quot;</outflow>
+				<non_negative/>
+				<units>Cases</units>
+			</stock>
+			<stock name="Unconditional\nrelease false negative\ncase">
+				<eqn>Initial_value_of_Unconditional_release_false_negatives</eqn>
+				<inflow>Wrongly_decide_to_release</inflow>
+				<outflow>&quot;Aggressor_stops_violence_and_control_(FN-R)&quot;</outflow>
+				<outflow>&quot;Aggressor_replace_violence_with_coercive_control_(FN-R)&quot;</outflow>
+				<outflow>&quot;Aggressor_become_active_(FN-R)&quot;</outflow>
+				<non_negative/>
+				<units>Cases</units>
+			</stock>
+			<stock name="Restricted release\nfalse positive case">
+				<eqn>Initial_value_of_Restricted_release_false_positives</eqn>
+				<inflow>wrongly_decide_to_release_on_conditions</inflow>
+				<outflow>&quot;Aggressor_stops_violence_and_control_(FP-RR)&quot;</outflow>
+				<outflow>&quot;Aggressor_replace_violence_with_coercive_control_(FP-RR)&quot;</outflow>
+				<outflow>&quot;Aggressor_become_active_(FP-RR)&quot;</outflow>
+				<non_negative/>
+				<units>Cases</units>
+			</stock>
+			<flow name="Aggressor become active (HR-RR)">
+				<eqn>Restricted_release_HR_case*(1-Proportion_of_stopping_violence_and_control_HR-Proportion_of_replacing_violence_with_coercive_control_HR)/TC_of_case_closure</eqn>
+				<non_negative/>
+				<units>Cases/Years</units>
+			</flow>
+			<stock name="Active cases\nHR RR">
+				<eqn>Initial_value_of_Restricted_release_HR_case</eqn>
+				<inflow>&quot;Aggressor_become_active_(HR-RR)&quot;</inflow>
+				<outflow>HR_RR_being_inactive</outflow>
+				<non_negative/>
+				<units>Cases</units>
+			</stock>
+			<aux name="TC of case closure">
+				<eqn>1</eqn>
+				<units>Years</units>
+			</aux>
+			<flow name="Aggressor become active (HR-D)">
+				<eqn>(Pretrial_detain_HR_case*(1-Proportion_of_stopping_violence_and_control_HR-Proportion_of_replacing_violence_with_coercive_control_HR))/TC_of_case_closure</eqn>
+				<non_negative/>
+				<units>Cases/Years</units>
+			</flow>
+			<stock name="Active cases\nHR D">
+				<eqn>Initial_value_of_Restricted_release_HR_case</eqn>
+				<inflow>&quot;Aggressor_become_active_(HR-D)&quot;</inflow>
+				<outflow>HR_D_being_inactive</outflow>
+				<non_negative/>
+				<units>Cases</units>
+			</stock>
+			<flow name="Aggressor become\nactive (FP-RR)">
+				<eqn>(Restricted_release_false_positive_case*(1-Proportion_of_stopping_violence_and_control_LR-Proportion_of_replacing_violence_with_coercive_control_LR))/TC_of_case_closure</eqn>
+				<non_negative/>
+				<units>Cases/Years</units>
+			</flow>
+			<stock name="Active cases\nFP RR">
+				<eqn>Initial_value_of_Restricted_release_HR_case</eqn>
+				<inflow>&quot;Aggressor_become_active_(FP-RR)&quot;</inflow>
+				<outflow>FP_RR_being_inactive</outflow>
+				<non_negative/>
+				<units>Cases</units>
+			</stock>
+			<flow name="Aggressor become\nactive (FP-D)">
+				<eqn>(Pretrial_detain_false_positive_case*(1-Proportion_of_stopping_violence_and_control_LR-Proportion_of_replacing_violence_with_coercive_control_LR))/TC_of_case_closure</eqn>
+				<non_negative/>
+				<units>Cases/Years</units>
+			</flow>
+			<stock name="Active cases\nFP D">
+				<eqn>Initial_value_of_Restricted_release_HR_case</eqn>
+				<inflow>&quot;Aggressor_become_active_(FP-D)&quot;</inflow>
+				<outflow>FP_D_being_inactive</outflow>
+				<non_negative/>
+				<units>Cases</units>
+			</stock>
+			<flow name="Aggressor become\nactive (LR-R)">
+				<eqn>(Unconditional_release_LR_case*(1-Proportion_of_stopping_violence_and_control_LR-Proportion_of_replacing_violence_with_coercive_control_LR))/TC_of_case_closure</eqn>
+				<non_negative/>
+				<units>Cases/Years</units>
+			</flow>
+			<stock name="Active cases\nLR R">
+				<eqn>Initial_value_of_Restricted_release_HR_case</eqn>
+				<inflow>&quot;Aggressor_become_active_(LR-R)&quot;</inflow>
+				<outflow>LR_R_being_inactive</outflow>
+				<non_negative/>
+				<units>Cases</units>
+			</stock>
+			<flow name="Aggressor become\nactive (FN-R)">
+				<eqn>(Unconditional_release_false_negative_case*(1-Proportion_of_stopping_violence_and_control_HR-Proportion_of_replacing_violence_with_coercive_control_HR))/TC_of_case_closure</eqn>
+				<non_negative/>
+				<units>Cases/Years</units>
+			</flow>
+			<stock name="Active cases\nFN R">
+				<eqn>Initial_value_of_Restricted_release_HR_case</eqn>
+				<inflow>&quot;Aggressor_become_active_(FN-R)&quot;</inflow>
+				<outflow>FN_R_being_inactive</outflow>
+				<non_negative/>
+				<units>Cases</units>
+			</stock>
+			<aux name="Proportion of\nreplacing violence\nwith coercive control LR">
+				<eqn>0.5</eqn>
+				<units>Dimensionless</units>
+			</aux>
+			<aux name="Proportion of stopping\nviolence and control LR">
+				<eqn>0.4</eqn>
+				<units>Dimensionless</units>
+			</aux>
+			<flow name="HR RR\nbeing inactive">
+				<eqn>Active_cases_HR_RR/TC_of_HR_being_inactive</eqn>
+				<non_negative/>
+				<units>Cases/Years</units>
+			</flow>
+			<aux name="TC of HR being inactive">
+				<eqn>12</eqn>
+				<units>Years</units>
+			</aux>
+			<flow name="HR D\nbeing inactive">
+				<eqn>Active_cases_HR_D/TC_of_HR_being_inactive</eqn>
+				<non_negative/>
+				<units>Cases/Years</units>
+			</flow>
+			<flow name="FN R\nbeing inactive">
+				<eqn>Active_cases_FN_R/TC_of_HR_being_inactive</eqn>
+				<non_negative/>
+				<units>Cases/Years</units>
+			</flow>
+			<flow name="FP RR\nbeing inactive">
+				<eqn>Active_cases_FP_RR/TC_of_LR_being_inactive</eqn>
+				<non_negative/>
+				<units>Cases/Years</units>
+			</flow>
+			<aux name="TC of LR being inactive">
+				<eqn>5</eqn>
+				<units>Years</units>
+			</aux>
+			<flow name="FP D\nbeing inactive">
+				<eqn>Active_cases_FP_D/TC_of_LR_being_inactive</eqn>
+				<non_negative/>
+				<units>Cases/Years</units>
+			</flow>
+			<flow name="LR R\nbeing inactive">
+				<eqn>Active_cases_LR_R/TC_of_LR_being_inactive</eqn>
+				<non_negative/>
+				<units>Cases/Years</units>
+			</flow>
+			<flow name="Not-reported\nIPV incidents\nbeing inactive">
+				<eqn>((1-Proportion_of_IPV_incidents_reported)*((Proportion_of_stopping_violence_and_control_HR+Proportion_of_stopping_violence_and_control_LR)/2)*IPV_incidents)/TC_of_general_being_inactive</eqn>
+				<non_negative/>
+				<units>Cases/Years</units>
+			</flow>
+			<aux name="TC of general being inactive">
+				<eqn>8</eqn>
+				<units>Years</units>
+			</aux>
+			<aux name="Learn from wrong\nrisk assessment">
+				<eqn>(Active_cases_FP_RR+Active_cases_FP_D+Active_cases_FN_R)*Proportion_of_learning_from_errors</eqn>
+				<units>unitless</units>
+			</aux>
+			<aux name="Proportion of\nlearning from errors">
+				<eqn>1/10000</eqn>
+				<units>1/Cases</units>
+			</aux>
+			<aux name="Initial value of\nUnconditional\nrelease false negatives">
+				<eqn>Initial_value_of_IPV_criminal_cases_in_Court*Initial_proportion_of_HR_case*(1-Initial_validity_of_risk_assessment)</eqn>
+				<units>Cases</units>
+			</aux>
+			<aux name="Initial values of\nDV incidents">
+				<eqn>Initial_value_of_IPV_criminal_cases_in_Court/Initial_proportion_of_DV_incidents_reported</eqn>
+				<units>Cases</units>
+			</aux>
+			<aux name="Initial value of\nActive cases\nFP RR">
+				<eqn>Initial_value_of_Restricted_release_false_positives*(1-Proportion_of_stopping_violence_and_control_LR-Proportion_of_replacing_violence_with_coercive_control_LR)</eqn>
+				<units>Cases</units>
+			</aux>
+			<aux name="Initial value of\nLR case">
+				<eqn>Initial_value_of_IPV_criminal_cases_in_Court*(1-Initial_proportion_of_HR_case)*Initial_validity_of_risk_assessment</eqn>
+				<units>Cases</units>
+			</aux>
+			<aux name="Initial proportion of DV\nincidents reported">
+				<eqn>0.10</eqn>
+				<units>Dimensionless</units>
+			</aux>
+			<aux name="Initial value of\nFalse negatives">
+				<eqn>INT(Initial_value_of_IPV_criminal_cases_in_Court*Initial_proportion_of_HR_case*(1-Initial_validity_of_risk_assessment))</eqn>
+				<units>Cases</units>
+			</aux>
+			<aux name="Initial value of\nActive cases\nHR D">
+				<eqn>Initial_value_of_Pretrial_detain_HR_case*(1-Proportion_of_stopping_violence_and_control_HR-Proportion_of_replacing_violence_with_coercive_control_HR)</eqn>
+				<units>Cases</units>
+			</aux>
+			<aux name="Initial value of\nHR case">
+				<eqn>Initial_value_of_IPV_criminal_cases_in_Court*Initial_proportion_of_HR_case*Initial_validity_of_risk_assessment</eqn>
+				<units>Cases</units>
+			</aux>
+			<aux name="Initial value of\nActive cases\nHR RR">
+				<eqn>Initial_value_of_Restricted_release_HR_case*(1-Proportion_of_stopping_violence_and_control_HR-Proportion_of_replacing_violence_with_coercive_control_HR)</eqn>
+				<units>Cases</units>
+			</aux>
+			<aux name="Initial value of\nRestricted release\nfalse positives">
+				<eqn>Initial_value_of_IPV_criminal_cases_in_Court*(1-Initial_proportion_of_HR_case)*(1-Initial_validity_of_risk_assessment)*(1-initial_proportion_of_decision_on_detention)</eqn>
+				<units>Cases</units>
+			</aux>
+			<aux name="Initial value of\nPretrial detain\nfalse positives">
+				<eqn>Initial_value_of_IPV_criminal_cases_in_Court*(1-Initial_proportion_of_HR_case)*(1-Initial_validity_of_risk_assessment)*initial_proportion_of_decision_on_detention</eqn>
+				<units>Cases</units>
+			</aux>
+			<aux name="Initial value of\nIPV criminal\ncases in Court">
+				<eqn>4500</eqn>
+				<units>Cases</units>
+			</aux>
+			<aux name="Initial value of\nRestricted release\nHR case">
+				<eqn>Initial_value_of_IPV_criminal_cases_in_Court*Initial_proportion_of_HR_case*Initial_validity_of_risk_assessment*(1-initial_proportion_of_decision_on_detention)</eqn>
+				<units>Cases</units>
+			</aux>
+			<aux name="Initial value of\nUnconditional\nrelease LR case">
+				<eqn>Initial_value_of_IPV_criminal_cases_in_Court*(1-Initial_proportion_of_HR_case)*Initial_validity_of_risk_assessment</eqn>
+				<units>Cases</units>
+			</aux>
+			<aux name="Initial validity of risk\nassessment">
+				<eqn>0.55</eqn>
+				<units>unitless</units>
+			</aux>
+			<aux name="initial proportion of\ndecision on detention">
+				<eqn>0.514</eqn>
+				<units>unitless</units>
+			</aux>
+			<aux name="Initial value of\nFalse positives">
+				<eqn>Initial_value_of_IPV_criminal_cases_in_Court*(1-Initial_proportion_of_HR_case)*(1-Initial_validity_of_risk_assessment)</eqn>
+				<units>Cases</units>
+			</aux>
+			<aux name="Initial proportion of\nHR case">
+				<eqn>0.208</eqn>
+				<units>unitless</units>
+			</aux>
+			<aux name="Initial value of\nActive cases\nFN R">
+				<eqn>Initial_value_of_Unconditional_release_false_negatives*(1-Proportion_of_stopping_violence_and_control_HR-Proportion_of_replacing_violence_with_coercive_control_HR)</eqn>
+				<units>Cases</units>
+			</aux>
+			<aux name="Initial value of\nActive cases\nLR R">
+				<eqn>Initial_value_of_Unconditional_release_LR_case*(1-Proportion_of_stopping_violence_and_control_LR-Proportion_of_replacing_violence_with_coercive_control_LR)</eqn>
+				<units>Cases</units>
+			</aux>
+			<aux name="Initial value of\nActive cases\nFP D">
+				<eqn>Initial_value_of_Pretrial_detain_false_positives*(1-Proportion_of_stopping_violence_and_control_LR-Proportion_of_replacing_violence_with_coercive_control_LR)</eqn>
+				<units>Cases</units>
+			</aux>
+			<aux name="Initial value of\nPretrial detain\nHR case">
+				<eqn>Initial_value_of_IPV_criminal_cases_in_Court*Initial_proportion_of_HR_case*Initial_validity_of_risk_assessment*initial_proportion_of_decision_on_detention</eqn>
+				<units>Cases</units>
+			</aux>
+			<group name="Initial value" run="true">
+				<entity name="Initial_value_of_IPV_criminal_cases_in_Court"/>
+				<entity name="Initial_value_of_HR_case"/>
+				<entity name="Initial_validity_of_risk_assessment"/>
+				<entity name="Initial_proportion_of_HR_case"/>
+				<entity name="Initial_value_of_Restricted_release_HR_case"/>
+				<entity name="initial_proportion_of_decision_on_detention"/>
+				<entity name="Initial_proportion_of_DV_incidents_reported"/>
+				<entity name="Initial_value_of_Active_cases_HR_RR"/>
+				<entity name="Initial_value_of_Restricted_release_false_positives"/>
+				<entity name="Initial_value_of_Pretrial_detain_HR_case"/>
+				<entity name="Initial_values_of_DV_incidents"/>
+				<entity name="Initial_value_of_Active_cases_FP_RR"/>
+				<entity name="Initial_value_of_Active_cases_HR_D"/>
+				<entity name="Initial_value_of_False_positives"/>
+				<entity name="Initial_value_of_Pretrial_detain_false_positives"/>
+				<entity name="Initial_value_of_Active_cases_FP_D"/>
+				<entity name="Initial_value_of_LR_case"/>
+				<entity name="Initial_value_of_False_negatives"/>
+				<entity name="Initial_value_of_Unconditional_release_false_negatives"/>
+				<entity name="Initial_value_of_Unconditional_release_LR_case"/>
+				<entity name="Initial_value_of_Active_cases_FN_R"/>
+				<entity name="Initial_value_of_Active_cases_LR_R"/>
+			</group>
+			<group name="Final" run="true">
+				<entity name="Proportion_of_resentment_due_to_experiencing_unfair_criminal_justice_system"/>
+				<entity name="TC_of_general_being_inactive"/>
+				<entity name='"Not-reported_IPV_incidents_being_inactive"'/>
+				<entity name="Perpetration"/>
+				<entity name="Proportion_of_Deterrence"/>
+				<entity name="Proportion_of_resentment_due_to_partner's_reporting_criminality"/>
+				<entity name="IPV_incidents"/>
+				<entity name="TC_of_perpetrating_a_new_assault"/>
+				<entity name="New_perpetration_outside_of_the_court_system"/>
+			</group>
+			<group name="Learning from error" run="false">
+				<entity name="Proportion_of_learning_from_errors"/>
+				<entity name="Learn_from_wrong_risk_assessment"/>
+			</group>
+			<aux name="TC of court\nadministration">
+				<eqn>0.4</eqn>
+				<units>Years</units>
+			</aux>
+			<isee:dependencies>
+				<var name="Wrongly_decide_to_detain">
+					<in>False_positive</in>
+					<in>Proportion_of_decision_on_detention</in>
+					<in>TC_of_decision_making</in>
+				</var>
+				<var name="wrongly_decide_to_release_on_conditions">
+					<in>False_positive</in>
+					<in>Proportion_of_decision_on_detention</in>
+					<in>TC_of_decision_making</in>
+				</var>
+				<var name="Wrongly_decide_to_release">
+					<in>False_negative</in>
+					<in>TC_of_decision_making</in>
+				</var>
+				<var name="Correctly_assessed_as_HR">
+					<in>proportion_of_HR_case</in>
+					<in>validity_of_risk_assessment</in>
+					<in>TC_of_assessment</in>
+					<in>IPV_criminal_cases_in_Court</in>
+				</var>
+				<var name="Correctly_assessed_as_LR">
+					<in>validity_of_risk_assessment</in>
+					<in>proportion_of_HR_case</in>
+					<in>TC_of_assessment</in>
+					<in>IPV_criminal_cases_in_Court</in>
+				</var>
+				<var name="validity_of_risk_assessment">
+					<in>Learn_from_wrong_risk_assessment</in>
+				</var>
+				<var name="Perpetration">
+					<in>New_perpetration_outside_of_the_court_system</in>
+					<in>Proportion_of_Deterrence</in>
+					<in>Proportion_of_resentment_due_to_experiencing_unfair_criminal_justice_system</in>
+					<in>TC_of_perpetrating_a_new_assault</in>
+					<in>Proportion_of_resentment_due_to_partner&apos;s_reporting_criminality</in>
+					<in>Active_cases_HR_RR</in>
+					<in>Active_cases_HR_D</in>
+					<in>Active_cases_FP_RR</in>
+					<in>Active_cases_FP_D</in>
+					<in>Active_cases_LR_R</in>
+					<in>Active_cases_FN_R</in>
+				</var>
+				<var name="decide_to_detain">
+					<in>HR_case</in>
+					<in>Proportion_of_decision_on_detention</in>
+					<in>TC_of_decision_making</in>
+				</var>
+				<var name="decide_to_release_on_conditions">
+					<in>TC_of_decision_making</in>
+					<in>Proportion_of_decision_on_detention</in>
+					<in>HR_case</in>
+				</var>
+				<var name="Wrongly_assessed_as_LR">
+					<in>validity_of_risk_assessment</in>
+					<in>proportion_of_HR_case</in>
+					<in>TC_of_assessment</in>
+					<in>IPV_criminal_cases_in_Court</in>
+				</var>
+				<var name="IPV_criminality_report">
+					<in>TC_of_IPV_criminality_reporting</in>
+					<in>Proportion_of_IPV_incidents_reported</in>
+					<in>IPV_incidents</in>
+					<in>TC_of_court_administration</in>
+				</var>
+				<var name="Wrongly_assessed_as_HR">
+					<in>TC_of_assessment</in>
+					<in>validity_of_risk_assessment</in>
+					<in>proportion_of_HR_case</in>
+					<in>IPV_criminal_cases_in_Court</in>
+				</var>
+				<var name="decide_to_release">
+					<in>LR_case</in>
+					<in>TC_of_decision_making</in>
+				</var>
+				<var name="IPV_criminal_cases_in_Court">
+					<in>Initial_value_of_IPV_criminal_cases_in_Court</in>
+				</var>
+				<var name="LR_case">
+					<in>Initial_value_of_LR_case</in>
+				</var>
+				<var name="HR_case">
+					<in>Initial_value_of_HR_case</in>
+				</var>
+				<var name="False_positive">
+					<in>Initial_value_of_False_positives</in>
+				</var>
+				<var name="IPV_incidents">
+					<in>Initial_values_of_DV_incidents</in>
+				</var>
+				<var name="False_negative">
+					<in>Initial_value_of_False_negatives</in>
+				</var>
+				<var name='"Aggressor_stops_violence_and_control_(FN-R)"'>
+					<in>Unconditional_release_false_negative_case</in>
+					<in>Proportion_of_stopping_violence_and_control_HR</in>
+					<in>TC_of_stopping_violence_and_control</in>
+				</var>
+				<var name='"Aggressor_replace_violence_with_coercive_control_(LR-R)"'>
+					<in>Unconditional_release_LR_case</in>
+					<in>TC_of_replacing_violence_with_coercive_control</in>
+					<in>Proportion_of_replacing_violence_with_coercive_control_LR</in>
+				</var>
+				<var name='"Aggressor_replace_violence_with_coercive_control_(HR-RR)"'>
+					<in>TC_of_replacing_violence_with_coercive_control</in>
+					<in>Proportion_of_replacing_violence_with_coercive_control_HR</in>
+					<in>Restricted_release_HR_case</in>
+				</var>
+				<var name='"Aggressor_replace_violence_with_coercive_control_(HR-D)"'>
+					<in>Pretrial_detain_HR_case</in>
+					<in>TC_of_replacing_violence_with_coercive_control</in>
+					<in>Proportion_of_replacing_violence_with_coercive_control_HR</in>
+				</var>
+				<var name='"Aggressor_stops_violence_and_control_(HR-RR)"'>
+					<in>TC_of_stopping_violence_and_control</in>
+					<in>Proportion_of_stopping_violence_and_control_HR</in>
+					<in>Restricted_release_HR_case</in>
+				</var>
+				<var name='"Aggressor_stops_violence_and_control_(FP-D)"'>
+					<in>Pretrial_detain_false_positive_case</in>
+					<in>TC_of_stopping_violence_and_control</in>
+					<in>Proportion_of_stopping_violence_and_control_LR</in>
+				</var>
+				<var name='"Aggressor_stops_violence_and_control_(HR-D)"'>
+					<in>Pretrial_detain_HR_case</in>
+					<in>Proportion_of_stopping_violence_and_control_HR</in>
+					<in>TC_of_stopping_violence_and_control</in>
+				</var>
+				<var name='"Aggressor_stops_violence_and_control_(FP-RR)"'>
+					<in>Restricted_release_false_positive_case</in>
+					<in>TC_of_stopping_violence_and_control</in>
+					<in>Proportion_of_stopping_violence_and_control_LR</in>
+				</var>
+				<var name='"Aggressor_replace_violence_with_coercive_control_(FP-RR)"'>
+					<in>Restricted_release_false_positive_case</in>
+					<in>TC_of_replacing_violence_with_coercive_control</in>
+					<in>Proportion_of_replacing_violence_with_coercive_control_LR</in>
+				</var>
+				<var name='"Aggressor_replace_violence_with_coercive_control_(FN-R)"'>
+					<in>Unconditional_release_false_negative_case</in>
+					<in>TC_of_replacing_violence_with_coercive_control</in>
+					<in>Proportion_of_replacing_violence_with_coercive_control_HR</in>
+				</var>
+				<var name='"Aggressor_replace_violence_with_coercive_control_(FP-D)"'>
+					<in>Pretrial_detain_false_positive_case</in>
+					<in>TC_of_replacing_violence_with_coercive_control</in>
+					<in>Proportion_of_replacing_violence_with_coercive_control_LR</in>
+				</var>
+				<var name='"Aggressor_stops_violence_and_control_(LR-R)"'>
+					<in>Unconditional_release_LR_case</in>
+					<in>TC_of_stopping_violence_and_control</in>
+					<in>Proportion_of_stopping_violence_and_control_LR</in>
+				</var>
+				<var name="Unconditional_release_LR_case">
+					<in>Initial_value_of_Unconditional_release_LR_case</in>
+				</var>
+				<var name="Restricted_release_HR_case">
+					<in>Initial_value_of_Restricted_release_HR_case</in>
+				</var>
+				<var name="Pretrial_detain_HR_case">
+					<in>Initial_value_of_Pretrial_detain_HR_case</in>
+				</var>
+				<var name="Pretrial_detain_false_positive_case">
+					<in>Initial_value_of_Pretrial_detain_false_positives</in>
+				</var>
+				<var name="Unconditional_release_false_negative_case">
+					<in>Initial_value_of_Unconditional_release_false_negatives</in>
+				</var>
+				<var name="Restricted_release_false_positive_case">
+					<in>Initial_value_of_Restricted_release_false_positives</in>
+				</var>
+				<var name='"Aggressor_become_active_(HR-RR)"'>
+					<in>Proportion_of_stopping_violence_and_control_HR</in>
+					<in>Proportion_of_replacing_violence_with_coercive_control_HR</in>
+					<in>TC_of_case_closure</in>
+					<in>Restricted_release_HR_case</in>
+				</var>
+				<var name="Active_cases_HR_RR">
+					<in>Initial_value_of_Restricted_release_HR_case</in>
+				</var>
+				<var name='"Aggressor_become_active_(HR-D)"'>
+					<in>Proportion_of_stopping_violence_and_control_HR</in>
+					<in>Pretrial_detain_HR_case</in>
+					<in>Proportion_of_replacing_violence_with_coercive_control_HR</in>
+					<in>TC_of_case_closure</in>
+				</var>
+				<var name="Active_cases_HR_D">
+					<in>Initial_value_of_Restricted_release_HR_case</in>
+				</var>
+				<var name='"Aggressor_become_active_(FP-RR)"'>
+					<in>Restricted_release_false_positive_case</in>
+					<in>TC_of_case_closure</in>
+					<in>Proportion_of_replacing_violence_with_coercive_control_LR</in>
+					<in>Proportion_of_stopping_violence_and_control_LR</in>
+				</var>
+				<var name="Active_cases_FP_RR">
+					<in>Initial_value_of_Restricted_release_HR_case</in>
+				</var>
+				<var name='"Aggressor_become_active_(FP-D)"'>
+					<in>TC_of_case_closure</in>
+					<in>Pretrial_detain_false_positive_case</in>
+					<in>Proportion_of_replacing_violence_with_coercive_control_LR</in>
+					<in>Proportion_of_stopping_violence_and_control_LR</in>
+				</var>
+				<var name="Active_cases_FP_D">
+					<in>Initial_value_of_Restricted_release_HR_case</in>
+				</var>
+				<var name='"Aggressor_become_active_(LR-R)"'>
+					<in>TC_of_case_closure</in>
+					<in>Unconditional_release_LR_case</in>
+					<in>Proportion_of_replacing_violence_with_coercive_control_LR</in>
+					<in>Proportion_of_stopping_violence_and_control_LR</in>
+				</var>
+				<var name="Active_cases_LR_R">
+					<in>Initial_value_of_Restricted_release_HR_case</in>
+				</var>
+				<var name='"Aggressor_become_active_(FN-R)"'>
+					<in>Proportion_of_stopping_violence_and_control_HR</in>
+					<in>Proportion_of_replacing_violence_with_coercive_control_HR</in>
+					<in>TC_of_case_closure</in>
+					<in>Unconditional_release_false_negative_case</in>
+				</var>
+				<var name="Active_cases_FN_R">
+					<in>Initial_value_of_Restricted_release_HR_case</in>
+				</var>
+				<var name="HR_RR_being_inactive">
+					<in>TC_of_HR_being_inactive</in>
+					<in>Active_cases_HR_RR</in>
+				</var>
+				<var name="HR_D_being_inactive">
+					<in>TC_of_HR_being_inactive</in>
+					<in>Active_cases_HR_D</in>
+				</var>
+				<var name="FN_R_being_inactive">
+					<in>TC_of_HR_being_inactive</in>
+					<in>Active_cases_FN_R</in>
+				</var>
+				<var name="FP_RR_being_inactive">
+					<in>TC_of_LR_being_inactive</in>
+					<in>Active_cases_FP_RR</in>
+				</var>
+				<var name="FP_D_being_inactive">
+					<in>TC_of_LR_being_inactive</in>
+					<in>Active_cases_FP_D</in>
+				</var>
+				<var name="LR_R_being_inactive">
+					<in>TC_of_LR_being_inactive</in>
+					<in>Active_cases_LR_R</in>
+				</var>
+				<var name='"Not-reported_IPV_incidents_being_inactive"'>
+					<in>IPV_incidents</in>
+					<in>TC_of_general_being_inactive</in>
+					<in>Proportion_of_IPV_incidents_reported</in>
+					<in>Proportion_of_stopping_violence_and_control_HR</in>
+					<in>Proportion_of_stopping_violence_and_control_LR</in>
+				</var>
+				<var name="Learn_from_wrong_risk_assessment">
+					<in>Active_cases_FP_RR</in>
+					<in>Active_cases_FP_D</in>
+					<in>Active_cases_FN_R</in>
+					<in>Proportion_of_learning_from_errors</in>
+				</var>
+				<var name="Initial_value_of_Unconditional_release_false_negatives">
+					<in>Initial_validity_of_risk_assessment</in>
+					<in>Initial_value_of_IPV_criminal_cases_in_Court</in>
+					<in>Initial_proportion_of_HR_case</in>
+				</var>
+				<var name="Initial_values_of_DV_incidents">
+					<in>Initial_proportion_of_DV_incidents_reported</in>
+					<in>Initial_value_of_IPV_criminal_cases_in_Court</in>
+				</var>
+				<var name="Initial_value_of_Active_cases_FP_RR">
+					<in>Proportion_of_replacing_violence_with_coercive_control_LR</in>
+					<in>Proportion_of_stopping_violence_and_control_LR</in>
+					<in>Initial_value_of_Restricted_release_false_positives</in>
+				</var>
+				<var name="Initial_value_of_LR_case">
+					<in>Initial_validity_of_risk_assessment</in>
+					<in>Initial_proportion_of_HR_case</in>
+					<in>Initial_value_of_IPV_criminal_cases_in_Court</in>
+				</var>
+				<var name="Initial_value_of_False_negatives">
+					<in>Initial_validity_of_risk_assessment</in>
+					<in>Initial_proportion_of_HR_case</in>
+					<in>Initial_value_of_IPV_criminal_cases_in_Court</in>
+				</var>
+				<var name="Initial_value_of_Active_cases_HR_D">
+					<in>Proportion_of_stopping_violence_and_control_HR</in>
+					<in>Proportion_of_replacing_violence_with_coercive_control_HR</in>
+					<in>Initial_value_of_Pretrial_detain_HR_case</in>
+				</var>
+				<var name="Initial_value_of_HR_case">
+					<in>Initial_validity_of_risk_assessment</in>
+					<in>Initial_proportion_of_HR_case</in>
+					<in>Initial_value_of_IPV_criminal_cases_in_Court</in>
+				</var>
+				<var name="Initial_value_of_Active_cases_HR_RR">
+					<in>Proportion_of_replacing_violence_with_coercive_control_HR</in>
+					<in>Proportion_of_stopping_violence_and_control_HR</in>
+					<in>Initial_value_of_Restricted_release_HR_case</in>
+				</var>
+				<var name="Initial_value_of_Restricted_release_false_positives">
+					<in>Initial_validity_of_risk_assessment</in>
+					<in>Initial_value_of_IPV_criminal_cases_in_Court</in>
+					<in>Initial_proportion_of_HR_case</in>
+					<in>initial_proportion_of_decision_on_detention</in>
+				</var>
+				<var name="Initial_value_of_Pretrial_detain_false_positives">
+					<in>Initial_validity_of_risk_assessment</in>
+					<in>Initial_value_of_IPV_criminal_cases_in_Court</in>
+					<in>Initial_proportion_of_HR_case</in>
+					<in>initial_proportion_of_decision_on_detention</in>
+				</var>
+				<var name="Initial_value_of_Restricted_release_HR_case">
+					<in>initial_proportion_of_decision_on_detention</in>
+					<in>Initial_value_of_IPV_criminal_cases_in_Court</in>
+					<in>Initial_validity_of_risk_assessment</in>
+					<in>Initial_proportion_of_HR_case</in>
+				</var>
+				<var name="Initial_value_of_Unconditional_release_LR_case">
+					<in>Initial_validity_of_risk_assessment</in>
+					<in>Initial_proportion_of_HR_case</in>
+					<in>Initial_value_of_IPV_criminal_cases_in_Court</in>
+				</var>
+				<var name="Initial_value_of_False_positives">
+					<in>Initial_validity_of_risk_assessment</in>
+					<in>Initial_value_of_IPV_criminal_cases_in_Court</in>
+					<in>Initial_proportion_of_HR_case</in>
+				</var>
+				<var name="Initial_value_of_Active_cases_FN_R">
+					<in>Proportion_of_replacing_violence_with_coercive_control_HR</in>
+					<in>Proportion_of_stopping_violence_and_control_HR</in>
+					<in>Initial_value_of_Unconditional_release_false_negatives</in>
+				</var>
+				<var name="Initial_value_of_Active_cases_LR_R">
+					<in>Proportion_of_stopping_violence_and_control_LR</in>
+					<in>Proportion_of_replacing_violence_with_coercive_control_LR</in>
+					<in>Initial_value_of_Unconditional_release_LR_case</in>
+				</var>
+				<var name="Initial_value_of_Active_cases_FP_D">
+					<in>Proportion_of_stopping_violence_and_control_LR</in>
+					<in>Proportion_of_replacing_violence_with_coercive_control_LR</in>
+					<in>Initial_value_of_Pretrial_detain_false_positives</in>
+				</var>
+				<var name="Initial_value_of_Pretrial_detain_HR_case">
+					<in>Initial_value_of_IPV_criminal_cases_in_Court</in>
+					<in>Initial_validity_of_risk_assessment</in>
+					<in>Initial_proportion_of_HR_case</in>
+					<in>initial_proportion_of_decision_on_detention</in>
+				</var>
+			</isee:dependencies>
+		</variables>
+		<views>
+			<style color="black" background="white" font_style="normal" font_weight="normal" text_decoration="none" text_align="center" vertical_text_align="center" font_color="black" font_family="Arial" font_size="10pt" padding="2" border_color="black" border_width="thin" border_style="none">
+				<text_box color="black" background="white" text_align="left" vertical_text_align="top" font_size="12pt"/>
+				<isee:loop_indicator color="black" background="white"/>
+				<numeric_display color="blue" background="white" font_size="9pt" isee:transparent="false"/>
+				<graph color="black" background="white" font_size="12pt" axis_color="#666666" grid_color="#C8C8C8" isee:graph_area_color="white" legend_position="bottom" isee:transparent="false" isee:hide_border="false">
+					<isee:series_styles>
+						<isee:series_style color="blue" thickness="1"/>
+						<isee:series_style color="red" thickness="1" pen_style="dot_dashed"/>
+						<isee:series_style color="fuchsia" thickness="1" pen_style="dotted"/>
+						<isee:series_style color="#008F44" thickness="1" pen_style="dashed"/>
+						<isee:series_style color="#FF7F00" thickness="1"/>
+						<isee:series_style color="#7F00FF" thickness="1" pen_style="dot_dashed"/>
+						<isee:series_style color="#0CA0FF" thickness="1" pen_style="dotted"/>
+						<isee:series_style color="lime" thickness="1" pen_style="dashed"/>
+						<isee:series_style color="#FF007F" thickness="1"/>
+						<isee:series_style color="aqua" thickness="1" pen_style="dot_dashed"/>
+						<isee:series_style color="#F586FF" thickness="1" pen_style="dotted"/>
+						<isee:series_style color="black" thickness="1" pen_style="dashed"/>
+						<isee:series_style color="#C8C8C8" thickness="1"/>
+					</isee:series_styles>
+				</graph>
+				<table color="black" background="#E0E0E0" text_align="right" font_size="12pt" orientation="vertical" wrap_text="false" isee:auto_fit="true" isee:use_alternate_row_colors="false" isee:unlimited_table_length="false" blank_column_width="80" column_width="160" interval="1" report_balances="beginning" report_flows="instantaneous"/>
+				<button color="black" background="#E0E0E0" font_size="12pt" transparent="false" corner_radius="0" isee:flat="false" icon_side="top"/>
+				<isee:annotation color="black" background="#E0E0E0" font_size="12pt" transparent="false" corner_radius="0" isee:flat="false" icon_side="top" popup_background_color="#FFFECF"/>
+				<slider color="black" background="#E0E0E0" font_size="12pt" num_ticks="3" label_side="top" wrap_title="true" isee:always_show_hover_tip="false" input_expands="true" input_width="100"/>
+				<isee:sim_speed_slider color="black" background="white"/>
+				<isee:time_slider color="black" background="white"/>
+				<isee:pie_input color="black" background="white" legend_position="bottom" isee:transparent="false"/>
+				<knob color="#66CC66" background="#E0E0E0" font_size="12pt" label_side="bottom" wrap_title="true"/>
+				<numeric_input color="black" background="#E0E0E0" font_size="12pt" label_side="left" wrap_title="true" input_expands="false" input_width="100"/>
+				<switch color="black" background="#E0E0E0" font_size="12pt" label_side="top" wrap_title="true" isee:appearance="switch"/>
+				<options color="black" background="white" appearance="radio-buttons" arrangement="vertical"/>
+				<graphical_input color="black" background="#E0E0E0" font_size="12pt"/>
+				<group_input color="black" background="#E0E0E0" font_size="12pt"/>
+				<lamp color="black" background="white" font_size="9pt"/>
+				<gauge color="black" background="white" needle_color="#F09F72" bar_color="#EEEEEE" bar_progress_color="black" appearance="radial" num_major_ticks="11" num_minor_ticks="11" show_numeric_value="true"/>
+				<isee:spatial_map color="black" background="white"/>
+				<isee:animation_object color="black" background="white"/>
+			</style>
+			<view isee:show_pages="true" page_width="774" page_height="594" isee:page_cols="8" isee:page_rows="6" isee:scroll_x="1503" isee:scroll_y="1051" isee:popup_graphs_are_comparative="true" type="stock_flow">
+				<style color="black" background="white" font_style="normal" font_weight="normal" text_decoration="none" text_align="center" vertical_text_align="center" font_color="black" font_family="Arial" font_size="10pt" padding="2" border_color="black" border_width="thin" border_style="none">
+					<stock color="blue" background="white" font_color="blue" font_size="16pt" label_side="top">
+						<shape type="rectangle" width="45" height="35"/>
+					</stock>
+					<flow color="blue" background="white" font_color="blue" font_size="16pt" label_side="bottom"/>
+					<module color="blue" background="white" font_color="blue" font_size="16pt" label_side="top">
+						<shape type="rectangle" width="55" height="45"/>
+					</module>
+					<aux color="blue" background="white" font_color="blue" font_size="16pt" label_side="bottom">
+						<shape type="circle" radius="18"/>
+					</aux>
+					<group color="red" background="white" font_color="red" font_size="9pt"/>
+					<connector color="#FF007F" background="white" font_color="#FF007F" font_size="9pt" isee:thickness="1"/>
+					<text_box color="black" background="white" text_align="left" vertical_text_align="top" font_size="12pt"/>
+					<isee:loop_indicator color="black" background="white"/>
+					<numeric_display color="blue" background="white" font_size="9pt" isee:transparent="false"/>
+					<graph color="black" background="white" font_size="12pt" axis_color="#666666" grid_color="#C8C8C8" isee:graph_area_color="white" legend_position="bottom" isee:transparent="false" isee:hide_border="false">
+						<isee:series_styles>
+							<isee:series_style color="blue" thickness="1"/>
+							<isee:series_style color="red" thickness="1" pen_style="dot_dashed"/>
+							<isee:series_style color="fuchsia" thickness="1" pen_style="dotted"/>
+							<isee:series_style color="#008F44" thickness="1" pen_style="dashed"/>
+							<isee:series_style color="#FF7F00" thickness="1"/>
+							<isee:series_style color="#7F00FF" thickness="1" pen_style="dot_dashed"/>
+							<isee:series_style color="#0CA0FF" thickness="1" pen_style="dotted"/>
+							<isee:series_style color="lime" thickness="1" pen_style="dashed"/>
+							<isee:series_style color="#FF007F" thickness="1"/>
+							<isee:series_style color="aqua" thickness="1" pen_style="dot_dashed"/>
+							<isee:series_style color="#F586FF" thickness="1" pen_style="dotted"/>
+							<isee:series_style color="black" thickness="1" pen_style="dashed"/>
+							<isee:series_style color="#C8C8C8" thickness="1"/>
+						</isee:series_styles>
+					</graph>
+					<table color="black" background="#E0E0E0" text_align="right" font_size="12pt" orientation="vertical" wrap_text="false" isee:auto_fit="true" isee:use_alternate_row_colors="false" isee:unlimited_table_length="false" blank_column_width="80" column_width="160" interval="1" report_balances="beginning" report_flows="instantaneous"/>
+				</style>
+				<aux x="3514.35" y="1153.59" name="New perpetration outside\nof the court system"/>
+				<aux x="431.501" y="1722.83" name="TC of IPV\ncriminality reporting"/>
+				<flow x="1496.25" y="1873.67" name="Wrongly decide\nto detain">
+					<pts>
+						<pt x="1269.92" y="1873.67"/>
+						<pt x="1734.58" y="1873.67"/>
+					</pts>
+				</flow>
+				<flow x="1484.63" y="1382.92" name="wrongly decide to release\non conditions">
+					<pts>
+						<pt x="1224.17" y="1847.17"/>
+						<pt x="1224.17" y="1382.92"/>
+						<pt x="1757.09" y="1382.92"/>
+					</pts>
+				</flow>
+				<flow x="1497.5" y="2884.92" name="Wrongly decide to\nrelease">
+					<pts>
+						<pt x="1250.75" y="2884.92"/>
+						<pt x="1756.25" y="2884.92"/>
+					</pts>
+				</flow>
+				<aux label_side="bottom" x="909.917" y="768.818" name="proportion of\nHR case"/>
+				<aux x="464.501" y="1942.5" name="Proportion of IPV\nincidents reported"/>
+				<flow x="895.457" y="876.335" name="Correctly assessed\nas HR">
+					<pts>
+						<pt x="603.334" y="1834.57"/>
+						<pt x="603.334" y="876.335"/>
+						<pt x="1199.58" y="876.335"/>
+					</pts>
+				</flow>
+				<connector uid="1" polarity="+" isee:polarity_placement="inside" angle="229.493">
+					<from>proportion_of_HR_case</from>
+					<to>Correctly_assessed_as_HR</to>
+				</connector>
+				<aux x="1594.17" y="365.083" name="Proportion of\ndecision on detention"/>
+				<flow x="849.707" y="2380.77" name="Correctly assessed\nas LR">
+					<pts>
+						<pt x="599.334" y="1885.9"/>
+						<pt x="599.334" y="2380.77"/>
+						<pt x="1112.08" y="2380.77"/>
+					</pts>
+				</flow>
+				<aux x="1034.54" y="765.818" name="validity of risk\nassessment"/>
+				<connector uid="2" polarity="+" isee:polarity_placement="inside" angle="257.474">
+					<from>validity_of_risk_assessment</from>
+					<to>Correctly_assessed_as_HR</to>
+				</connector>
+				<flow x="3373.97" y="959.76" name="Perpetration">
+					<pts>
+						<pt x="3211.25" y="959.76"/>
+						<pt x="3536.69" y="959.76"/>
+					</pts>
+				</flow>
+				<connector uid="3" polarity="+" isee:polarity_placement="inside" angle="147.841">
+					<from>New_perpetration_outside_of_the_court_system</from>
+					<to>Perpetration</to>
+				</connector>
+				<aux x="3390.39" y="736.085" width="15.5" height="15.5" name="Proportion of\nDeterrence"/>
+				<connector uid="4" polarity="-" isee:polarity_placement="outside" angle="305.003">
+					<from>Proportion_of_Deterrence</from>
+					<to>Perpetration</to>
+				</connector>
+				<aux x="1452.83" y="365.083" name="TC of\ndecision making"/>
+				<flow x="1514.17" y="864.584" name="decide to\ndetain">
+					<pts>
+						<pt x="1291.58" y="864.584"/>
+						<pt x="1748.75" y="864.584"/>
+					</pts>
+				</flow>
+				<aux x="1155.75" y="765.818" name="TC of assessment"/>
+				<connector uid="5" polarity="-" isee:polarity_placement="inside" angle="222.001">
+					<from>TC_of_assessment</from>
+					<to>Correctly_assessed_as_HR</to>
+				</connector>
+				<flow x="1501.92" y="452.836" name="decide to release on\nconditions">
+					<pts>
+						<pt x="1242.08" y="841.834"/>
+						<pt x="1242.08" y="452.836"/>
+						<pt x="1773.75" y="452.836"/>
+					</pts>
+				</flow>
+				<connector uid="6" polarity="-" isee:polarity_placement="inside" angle="257.458">
+					<from>TC_of_decision_making</from>
+					<to>decide_to_release_on_conditions</to>
+				</connector>
+				<connector uid="7" polarity="-" isee:polarity_placement="inside" angle="223.567">
+					<from>Proportion_of_decision_on_detention</from>
+					<to>decide_to_release_on_conditions</to>
+				</connector>
+				<flow label_side="bottom" x="872.544" y="2883.17" name="Wrongly assessed\nas LR">
+					<pts>
+						<pt x="596.667" y="1885.9"/>
+						<pt x="596.667" y="2883.17"/>
+						<pt x="1160.42" y="2883.17"/>
+					</pts>
+				</flow>
+				<flow label_side="top" x="424.417" y="1857.5" name="IPV criminality report">
+					<pts>
+						<pt x="285" y="1857.5"/>
+						<pt x="563.834" y="1857.5"/>
+					</pts>
+				</flow>
+				<connector uid="8" polarity="-" isee:polarity_placement="inside" angle="331.4">
+					<from>TC_of_IPV_criminality_reporting</from>
+					<to>IPV_criminality_report</to>
+				</connector>
+				<connector uid="9" polarity="+" isee:polarity_placement="inside" angle="115.247">
+					<from>Proportion_of_IPV_incidents_reported</from>
+					<to>IPV_criminality_report</to>
+				</connector>
+				<aux label_side="top" x="3548.95" y="832.502" name="Proportion of resentment\ndue to experiencing\nunfair criminal justice system"/>
+				<connector uid="10" polarity="+" isee:polarity_placement="outside" angle="263.745">
+					<from>Proportion_of_resentment_due_to_experiencing_unfair_criminal_justice_system</from>
+					<to>Perpetration</to>
+				</connector>
+				<aux x="3473.62" y="1011.84" width="18" height="18" name="TC of perpetrating\na new assault"/>
+				<connector uid="11" polarity="-" isee:polarity_placement="outside" angle="174.83">
+					<from>TC_of_perpetrating_a_new_assault</from>
+					<to>Perpetration</to>
+				</connector>
+				<aux x="3364.14" y="816.002" width="19.6667" height="19.6667" name="Proportion of resentment\ndue to partner's\nreporting criminality"/>
+				<connector uid="12" polarity="+" isee:polarity_placement="outside" angle="245.552">
+					<from>Proportion_of_resentment_due_to_partner&apos;s_reporting_criminality</from>
+					<to>Perpetration</to>
+				</connector>
+				<flow label_side="bottom" x="910.875" y="1864.04" name="Wrongly assessed\nas HR">
+					<pts>
+						<pt x="652.501" y="1864.04"/>
+						<pt x="1181.25" y="1864.04"/>
+					</pts>
+				</flow>
+				<flow x="1485" y="2379.55" name="decide to\nrelease">
+					<pts>
+						<pt x="1199.08" y="2379.55"/>
+						<pt x="1782.92" y="2379.55"/>
+					</pts>
+				</flow>
+				<stock label_side="center" x="563.834" y="1834.57" width="88.6667" height="51.3333" name="IPV criminal\ncases in Court"/>
+				<stock label_side="center" x="1112.08" y="2354.27" width="87" height="53" name="LR case"/>
+				<connector uid="13" polarity="+" isee:polarity_placement="inside" angle="36.7118">
+					<from>LR_case</from>
+					<to>decide_to_release</to>
+				</connector>
+				<stock label_side="center" x="1199.58" y="841.834" width="92" height="54.6667" name="HR case"/>
+				<connector uid="14" polarity="+" isee:polarity_placement="inside" angle="17.0284">
+					<from>HR_case</from>
+					<to>decide_to_detain</to>
+				</connector>
+				<connector uid="15" polarity="+" isee:polarity_placement="inside" angle="81.383">
+					<from>HR_case</from>
+					<to>decide_to_release_on_conditions</to>
+				</connector>
+				<stock label_side="center" x="1181.25" y="1847.17" width="88.6667" height="53" name="False positive"/>
+				<connector uid="16" polarity="+" isee:polarity_placement="inside" angle="83.4843">
+					<from>False_positive</from>
+					<to>wrongly_decide_to_release_on_conditions</to>
+				</connector>
+				<connector uid="17" polarity="+" isee:polarity_placement="inside" angle="16.2413">
+					<from>False_positive</from>
+					<to>Wrongly_decide_to_detain</to>
+				</connector>
+				<stock label_side="center" x="3536.69" y="933.42" width="94.5" height="65.5" name="IPV\nincidents"/>
+				<stock label_side="center" x="1160.42" y="2856.5" width="90.3333" height="54.6667" name="False negative"/>
+				<connector uid="18" polarity="+" isee:polarity_placement="inside" angle="43.0591">
+					<from>False_negative</from>
+					<to>Wrongly_decide_to_release</to>
+				</connector>
+				<connector uid="19" polarity="-" isee:polarity_placement="inside" angle="242.37">
+					<from>
+						<alias uid="20"/>
+					</from>
+					<to>Wrongly_assessed_as_HR</to>
+				</connector>
+				<connector uid="21" polarity="-" isee:polarity_placement="inside" angle="260.691">
+					<from>
+						<alias uid="22"/>
+					</from>
+					<to>decide_to_release</to>
+				</connector>
+				<connector uid="23" polarity="+" isee:polarity_placement="inside" angle="12.3167">
+					<from>
+						<alias uid="24"/>
+					</from>
+					<to>IPV_criminality_report</to>
+				</connector>
+				<connector uid="25" polarity="-" isee:polarity_placement="inside" angle="289.556">
+					<from>
+						<alias uid="26"/>
+					</from>
+					<to>Wrongly_assessed_as_LR</to>
+				</connector>
+				<connector uid="27" polarity="-" isee:polarity_placement="inside" angle="259.752">
+					<from>
+						<alias uid="28"/>
+					</from>
+					<to>Wrongly_assessed_as_HR</to>
+				</connector>
+				<connector uid="29" polarity="+" isee:polarity_placement="inside" angle="293.356">
+					<from>
+						<alias uid="30"/>
+					</from>
+					<to>Correctly_assessed_as_LR</to>
+				</connector>
+				<connector uid="31" polarity="-" isee:polarity_placement="inside" angle="273.068">
+					<from>
+						<alias uid="32"/>
+					</from>
+					<to>Correctly_assessed_as_LR</to>
+				</connector>
+				<connector uid="33" polarity="+" isee:polarity_placement="inside" angle="287.743">
+					<from>
+						<alias uid="34"/>
+					</from>
+					<to>Wrongly_assessed_as_LR</to>
+				</connector>
+				<connector uid="35" polarity="-" isee:polarity_placement="inside" angle="252.864">
+					<from>
+						<alias uid="36"/>
+					</from>
+					<to>wrongly_decide_to_release_on_conditions</to>
+				</connector>
+				<connector uid="37" polarity="-" isee:polarity_placement="inside" angle="292.904">
+					<from>
+						<alias uid="38"/>
+					</from>
+					<to>Wrongly_assessed_as_HR</to>
+				</connector>
+				<connector uid="39" polarity="-" isee:polarity_placement="inside" angle="261.87">
+					<from>
+						<alias uid="40"/>
+					</from>
+					<to>Correctly_assessed_as_LR</to>
+				</connector>
+				<connector uid="41" polarity="-" isee:polarity_placement="inside" angle="238.736">
+					<from>
+						<alias uid="42"/>
+					</from>
+					<to>Wrongly_assessed_as_LR</to>
+				</connector>
+				<connector uid="43" polarity="+" isee:polarity_placement="inside" angle="244.416">
+					<from>
+						<alias uid="44"/>
+					</from>
+					<to>decide_to_detain</to>
+				</connector>
+				<connector uid="45" polarity="+" isee:polarity_placement="inside" angle="288.246">
+					<from>
+						<alias uid="46"/>
+					</from>
+					<to>Wrongly_decide_to_detain</to>
+				</connector>
+				<connector uid="47" polarity="-" isee:polarity_placement="inside" angle="243.053">
+					<from>
+						<alias uid="48"/>
+					</from>
+					<to>Wrongly_decide_to_release</to>
+				</connector>
+				<connector uid="49" polarity="-" isee:polarity_placement="inside" angle="232.941">
+					<from>
+						<alias uid="50"/>
+					</from>
+					<to>wrongly_decide_to_release_on_conditions</to>
+				</connector>
+				<connector uid="51" polarity="-" isee:polarity_placement="inside" angle="234.984">
+					<from>
+						<alias uid="52"/>
+					</from>
+					<to>decide_to_detain</to>
+				</connector>
+				<connector uid="53" polarity="-" isee:polarity_placement="inside" angle="270">
+					<from>
+						<alias uid="54"/>
+					</from>
+					<to>Wrongly_decide_to_detain</to>
+				</connector>
+				<flow x="2097.5" y="2780.5" name="Aggressor stops\nviolence and control (FN-R)">
+					<pts>
+						<pt x="1814.5" y="2871.17"/>
+						<pt x="1814.5" y="2780.5"/>
+						<pt x="2404.5" y="2780.5"/>
+					</pts>
+				</flow>
+				<flow x="2107.71" y="2402.59" name="Aggressor replace violence\nwith coercive\ncontrol (LR-R)">
+					<pts>
+						<pt x="1882.92" y="2402.59"/>
+						<pt x="2356.5" y="2402.59"/>
+					</pts>
+				</flow>
+				<flow x="2118" y="377.5" name="Aggressor replace violence\nwith coercive control (HR-RR)">
+					<pts>
+						<pt x="1847.5" y="422.169"/>
+						<pt x="1847.5" y="377.5"/>
+						<pt x="2412.5" y="377.5"/>
+					</pts>
+				</flow>
+				<flow x="2087.38" y="867.5" name="Aggressor replace violence\nwith coercive control (HR-D)">
+					<pts>
+						<pt x="1848.75" y="867.5"/>
+						<pt x="2350" y="867.5"/>
+					</pts>
+				</flow>
+				<aux x="2404.75" y="261.587" name="TC of replacing\nviolence with\ncoercive control"/>
+				<connector uid="55" polarity="-" isee:polarity_placement="inside" angle="244.101">
+					<from>TC_of_replacing_violence_with_coercive_control</from>
+					<to>&quot;Aggressor_replace_violence_with_coercive_control_(HR-RR)&quot;</to>
+				</connector>
+				<flow x="2101.75" y="208.333" name="Aggressor stops\nviolence and control (HR-RR)">
+					<pts>
+						<pt x="1825" y="422.169"/>
+						<pt x="1825" y="208.333"/>
+						<pt x="2402.5" y="208.333"/>
+					</pts>
+				</flow>
+				<flow x="2075.92" y="1760" name="Aggressor stops\nviolence and control (FP-D)">
+					<pts>
+						<pt x="1795.83" y="1851.58"/>
+						<pt x="1795.83" y="1760"/>
+						<pt x="2380" y="1760"/>
+					</pts>
+				</flow>
+				<aux x="2238.91" y="268.17" name="Proportion of\nreplacing violence\nwith coercive control HR"/>
+				<connector uid="56" polarity="+" isee:polarity_placement="inside" angle="222.121">
+					<from>Proportion_of_replacing_violence_with_coercive_control_HR</from>
+					<to>&quot;Aggressor_replace_violence_with_coercive_control_(HR-RR)&quot;</to>
+				</connector>
+				<aux x="2349.75" y="120.334" name="TC of stopping violence and control"/>
+				<connector uid="57" polarity="-" isee:polarity_placement="inside" angle="228.617">
+					<from>TC_of_stopping_violence_and_control</from>
+					<to>&quot;Aggressor_stops_violence_and_control_(HR-RR)&quot;</to>
+				</connector>
+				<aux x="2173.63" y="120.334" name="Proportion of stopping\nviolence and control HR"/>
+				<connector uid="58" polarity="+" isee:polarity_placement="inside" angle="230.757">
+					<from>Proportion_of_stopping_violence_and_control_HR</from>
+					<to>&quot;Aggressor_stops_violence_and_control_(HR-RR)&quot;</to>
+				</connector>
+				<flow x="2072.17" y="730.818" name="Aggressor stops\nviolence and control (HR-D)">
+					<pts>
+						<pt x="1825.83" y="831"/>
+						<pt x="1825.83" y="730.818"/>
+						<pt x="2342.5" y="730.818"/>
+					</pts>
+				</flow>
+				<flow x="2073.83" y="1250" name="Aggressor stops\nviolence and control (FP-RR)">
+					<pts>
+						<pt x="1806.66" y="1364"/>
+						<pt x="1806.66" y="1250"/>
+						<pt x="2365" y="1250"/>
+					</pts>
+				</flow>
+				<flow x="2102.8" y="1402.5" name="Aggressor replace violence\nwith coercive control (FP-RR)">
+					<pts>
+						<pt x="1857.09" y="1402.5"/>
+						<pt x="2372.5" y="1402.5"/>
+					</pts>
+				</flow>
+				<flow x="2110.88" y="2910.5" name="Aggressor replace violence\nwith coercive\ncontrol (FN-R)">
+					<pts>
+						<pt x="1856.25" y="2910.5"/>
+						<pt x="2389.5" y="2910.5"/>
+					</pts>
+				</flow>
+				<flow x="2087.79" y="1900.66" name="Aggressor replace violence\nwith coercive control (FP-D)">
+					<pts>
+						<pt x="1834.58" y="1900.66"/>
+						<pt x="2365" y="1900.66"/>
+					</pts>
+				</flow>
+				<flow x="2091.59" y="2261.66" name="Aggressor stops\nviolence and control (LR-R)">
+					<pts>
+						<pt x="1835.67" y="2355.17"/>
+						<pt x="1835.67" y="2261.66"/>
+						<pt x="2371.5" y="2261.66"/>
+					</pts>
+				</flow>
+				<stock label_side="center" x="1782.92" y="2355.17" width="100" height="64.6667" name="Unconditional\nrelease LR case"/>
+				<connector uid="59" polarity="+" isee:polarity_placement="inside" angle="34.2493">
+					<from>Unconditional_release_LR_case</from>
+					<to>&quot;Aggressor_stops_violence_and_control_(LR-R)&quot;</to>
+				</connector>
+				<connector uid="60" polarity="+" isee:polarity_placement="inside" angle="16.9664">
+					<from>Unconditional_release_LR_case</from>
+					<to>&quot;Aggressor_replace_violence_with_coercive_control_(LR-R)&quot;</to>
+				</connector>
+				<stock label_side="center" x="1773.75" y="422.169" width="100" height="61.3333" name="Restricted release\nHR case"/>
+				<connector uid="61" polarity="+" isee:polarity_placement="inside" angle="100.964">
+					<from>Restricted_release_HR_case</from>
+					<to>&quot;Aggressor_stops_violence_and_control_(HR-RR)&quot;</to>
+				</connector>
+				<connector uid="62" polarity="+" isee:polarity_placement="inside" angle="75.3683">
+					<from>Restricted_release_HR_case</from>
+					<to>&quot;Aggressor_replace_violence_with_coercive_control_(HR-RR)&quot;</to>
+				</connector>
+				<stock label_side="center" x="1748.75" y="831" width="100" height="56.3333" name="Pretrial detain\nHR case"/>
+				<connector uid="63" polarity="+" isee:polarity_placement="inside" angle="62.712">
+					<from>Pretrial_detain_HR_case</from>
+					<to>&quot;Aggressor_stops_violence_and_control_(HR-D)&quot;</to>
+				</connector>
+				<connector uid="64" polarity="+" isee:polarity_placement="inside" angle="15.9454">
+					<from>Pretrial_detain_HR_case</from>
+					<to>&quot;Aggressor_replace_violence_with_coercive_control_(HR-D)&quot;</to>
+				</connector>
+				<stock label_side="center" x="1734.58" y="1851.58" width="100" height="56.3333" name="Pretrial detain\nfalse positive case"/>
+				<connector uid="65" polarity="+" isee:polarity_placement="inside" angle="22.344">
+					<from>Pretrial_detain_false_positive_case</from>
+					<to>&quot;Aggressor_stops_violence_and_control_(FP-D)&quot;</to>
+				</connector>
+				<connector uid="66" polarity="+" isee:polarity_placement="inside" angle="356.367">
+					<from>Pretrial_detain_false_positive_case</from>
+					<to>&quot;Aggressor_replace_violence_with_coercive_control_(FP-D)&quot;</to>
+				</connector>
+				<stock label_side="center" x="1756.25" y="2871.17" width="100" height="64.6667" name="Unconditional\nrelease false negative\ncase"/>
+				<connector uid="67" polarity="+" isee:polarity_placement="inside" angle="46.2307">
+					<from>Unconditional_release_false_negative_case</from>
+					<to>&quot;Aggressor_stops_violence_and_control_(FN-R)&quot;</to>
+				</connector>
+				<connector uid="68" polarity="+" isee:polarity_placement="inside" angle="26.9806">
+					<from>Unconditional_release_false_negative_case</from>
+					<to>&quot;Aggressor_replace_violence_with_coercive_control_(FN-R)&quot;</to>
+				</connector>
+				<stock label_side="center" x="1757.09" y="1364" width="100" height="59.6667" name="Restricted release\nfalse positive case"/>
+				<connector uid="69" polarity="+" isee:polarity_placement="inside" angle="65.9489">
+					<from>Restricted_release_false_positive_case</from>
+					<to>&quot;Aggressor_stops_violence_and_control_(FP-RR)&quot;</to>
+				</connector>
+				<connector uid="70" polarity="+" isee:polarity_placement="inside" angle="23.2558">
+					<from>Restricted_release_false_positive_case</from>
+					<to>&quot;Aggressor_replace_violence_with_coercive_control_(FP-RR)&quot;</to>
+				</connector>
+				<connector uid="71" polarity="-" isee:polarity_placement="inside" angle="242.092">
+					<from>
+						<alias uid="72"/>
+					</from>
+					<to>&quot;Aggressor_stops_violence_and_control_(FP-RR)&quot;</to>
+				</connector>
+				<connector uid="73" polarity="+" isee:polarity_placement="inside" angle="227.654">
+					<from>
+						<alias uid="74"/>
+					</from>
+					<to>&quot;Aggressor_stops_violence_and_control_(HR-D)&quot;</to>
+				</connector>
+				<connector uid="75" polarity="-" isee:polarity_placement="inside" angle="240.255">
+					<from>
+						<alias uid="76"/>
+					</from>
+					<to>&quot;Aggressor_stops_violence_and_control_(HR-D)&quot;</to>
+				</connector>
+				<connector uid="77" polarity="-" isee:polarity_placement="inside" angle="243.435">
+					<from>
+						<alias uid="78"/>
+					</from>
+					<to>&quot;Aggressor_replace_violence_with_coercive_control_(HR-D)&quot;</to>
+				</connector>
+				<connector uid="79" polarity="+" isee:polarity_placement="inside" angle="229.568">
+					<from>
+						<alias uid="80"/>
+					</from>
+					<to>&quot;Aggressor_replace_violence_with_coercive_control_(HR-D)&quot;</to>
+				</connector>
+				<connector uid="81" polarity="-" isee:polarity_placement="inside" angle="237.095">
+					<from>
+						<alias uid="82"/>
+					</from>
+					<to>&quot;Aggressor_replace_violence_with_coercive_control_(FP-RR)&quot;</to>
+				</connector>
+				<connector uid="83" polarity="-" isee:polarity_placement="inside" angle="240.255">
+					<from>
+						<alias uid="84"/>
+					</from>
+					<to>&quot;Aggressor_stops_violence_and_control_(FP-D)&quot;</to>
+				</connector>
+				<connector uid="85" polarity="-" isee:polarity_placement="inside" angle="197.851">
+					<from>
+						<alias uid="86"/>
+					</from>
+					<to>&quot;Aggressor_replace_violence_with_coercive_control_(FP-D)&quot;</to>
+				</connector>
+				<connector uid="87" polarity="-" isee:polarity_placement="inside" angle="222.162">
+					<from>
+						<alias uid="88"/>
+					</from>
+					<to>&quot;Aggressor_replace_violence_with_coercive_control_(LR-R)&quot;</to>
+				</connector>
+				<connector uid="89" polarity="+" isee:polarity_placement="inside" angle="306.103">
+					<from>
+						<alias uid="90"/>
+					</from>
+					<to>&quot;Aggressor_stops_violence_and_control_(FN-R)&quot;</to>
+				</connector>
+				<connector uid="91" polarity="-" isee:polarity_placement="inside" angle="240.255">
+					<from>
+						<alias uid="92"/>
+					</from>
+					<to>&quot;Aggressor_stops_violence_and_control_(FN-R)&quot;</to>
+				</connector>
+				<connector uid="93" polarity="-" isee:polarity_placement="inside" angle="222.162">
+					<from>
+						<alias uid="94"/>
+					</from>
+					<to>&quot;Aggressor_replace_violence_with_coercive_control_(FN-R)&quot;</to>
+				</connector>
+				<connector uid="95" polarity="+" isee:polarity_placement="inside" angle="215.523">
+					<from>
+						<alias uid="96"/>
+					</from>
+					<to>&quot;Aggressor_replace_violence_with_coercive_control_(FN-R)&quot;</to>
+				</connector>
+				<connector uid="97" polarity="-" isee:polarity_placement="inside" angle="240.255">
+					<from>
+						<alias uid="98"/>
+					</from>
+					<to>&quot;Aggressor_stops_violence_and_control_(LR-R)&quot;</to>
+				</connector>
+				<flow label_side="bottom" x="2121.04" y="540.833" name="Aggressor become active (HR-RR)">
+					<pts>
+						<pt x="1845" y="483.502"/>
+						<pt x="1845" y="540.833"/>
+						<pt x="2409.08" y="540.833"/>
+					</pts>
+				</flow>
+				<stock label_side="center" x="2409.08" y="496.169" width="100" height="61.3333" name="Active cases\nHR RR"/>
+				<aux x="2322.75" y="450.167" width="15.5" height="15.5" name="TC of case closure"/>
+				<connector uid="99" polarity="-" isee:polarity_placement="inside" angle="0">
+					<from>
+						<alias uid="100"/>
+					</from>
+					<to>&quot;Aggressor_become_active_(HR-RR)&quot;</to>
+				</connector>
+				<connector uid="101" polarity="-" isee:polarity_placement="inside" angle="255.828">
+					<from>
+						<alias uid="102"/>
+					</from>
+					<to>&quot;Aggressor_become_active_(HR-RR)&quot;</to>
+				</connector>
+				<connector uid="103" polarity="-" isee:polarity_placement="inside" angle="250.71">
+					<from>TC_of_case_closure</from>
+					<to>&quot;Aggressor_become_active_(HR-RR)&quot;</to>
+				</connector>
+				<connector uid="104" polarity="+" isee:polarity_placement="inside" angle="323.544">
+					<from>Restricted_release_HR_case</from>
+					<to>&quot;Aggressor_become_active_(HR-RR)&quot;</to>
+				</connector>
+				<flow x="2076.04" y="1058.33" name="Aggressor become active (HR-D)">
+					<pts>
+						<pt x="1820" y="887.333"/>
+						<pt x="1820" y="1058.33"/>
+						<pt x="2344.08" y="1058.33"/>
+					</pts>
+				</flow>
+				<connector uid="105" polarity="-" isee:polarity_placement="inside" angle="255.482">
+					<from>
+						<alias uid="106"/>
+					</from>
+					<to>&quot;Aggressor_become_active_(HR-D)&quot;</to>
+				</connector>
+				<connector uid="107" polarity="+" isee:polarity_placement="inside" angle="271.753">
+					<from>Pretrial_detain_HR_case</from>
+					<to>&quot;Aggressor_become_active_(HR-D)&quot;</to>
+				</connector>
+				<connector uid="108" polarity="-" isee:polarity_placement="inside" angle="244.731">
+					<from>
+						<alias uid="109"/>
+					</from>
+					<to>&quot;Aggressor_become_active_(HR-D)&quot;</to>
+				</connector>
+				<connector uid="110" polarity="-" isee:polarity_placement="inside" angle="221.82">
+					<from>
+						<alias uid="111"/>
+					</from>
+					<to>&quot;Aggressor_become_active_(HR-D)&quot;</to>
+				</connector>
+				<stock label_side="center" x="2344.08" y="1033" width="100" height="61.3333" name="Active cases\nHR D"/>
+				<flow x="2075.21" y="1595" name="Aggressor become\nactive (FP-RR)">
+					<pts>
+						<pt x="1801.67" y="1423.67"/>
+						<pt x="1801.67" y="1595"/>
+						<pt x="2360.75" y="1595"/>
+					</pts>
+				</flow>
+				<connector uid="112" polarity="+" isee:polarity_placement="inside" angle="291.951">
+					<from>Restricted_release_false_positive_case</from>
+					<to>&quot;Aggressor_become_active_(FP-RR)&quot;</to>
+				</connector>
+				<connector uid="113" polarity="-" isee:polarity_placement="inside" angle="246.801">
+					<from>
+						<alias uid="114"/>
+					</from>
+					<to>&quot;Aggressor_become_active_(FP-RR)&quot;</to>
+				</connector>
+				<stock label_side="center" x="2360.75" y="1564.33" width="100" height="61.3333" name="Active cases\nFP RR"/>
+				<flow x="2069.01" y="2087" name="Aggressor become\nactive (FP-D)">
+					<pts>
+						<pt x="1797.34" y="1907.91"/>
+						<pt x="1797.34" y="2087"/>
+						<pt x="2352.67" y="2087"/>
+					</pts>
+				</flow>
+				<connector uid="115" polarity="-" isee:polarity_placement="inside" angle="246.801">
+					<from>
+						<alias uid="116"/>
+					</from>
+					<to>&quot;Aggressor_become_active_(FP-D)&quot;</to>
+				</connector>
+				<stock label_side="center" x="2352.67" y="2056.33" width="100" height="61.3333" name="Active cases\nFP D"/>
+				<connector uid="117" polarity="+" isee:polarity_placement="inside" angle="276.361">
+					<from>Pretrial_detain_false_positive_case</from>
+					<to>&quot;Aggressor_become_active_(FP-D)&quot;</to>
+				</connector>
+				<flow x="2100.76" y="2590.75" name="Aggressor become\nactive (LR-R)">
+					<pts>
+						<pt x="1835.34" y="2419.84"/>
+						<pt x="1835.34" y="2590.75"/>
+						<pt x="2378.17" y="2590.75"/>
+					</pts>
+				</flow>
+				<connector uid="118" polarity="-" isee:polarity_placement="inside" angle="246.801">
+					<from>
+						<alias uid="119"/>
+					</from>
+					<to>&quot;Aggressor_become_active_(LR-R)&quot;</to>
+				</connector>
+				<stock label_side="center" x="2378.17" y="2560.08" width="100" height="61.3333" name="Active cases\nLR R"/>
+				<connector uid="120" polarity="+" isee:polarity_placement="inside" angle="283.449">
+					<from>Unconditional_release_LR_case</from>
+					<to>&quot;Aggressor_become_active_(LR-R)&quot;</to>
+				</connector>
+				<flow x="2075.17" y="3128.41" name="Aggressor become\nactive (FN-R)">
+					<pts>
+						<pt x="1821" y="2935.84"/>
+						<pt x="1821" y="3128.41"/>
+						<pt x="2341.33" y="3128.41"/>
+					</pts>
+				</flow>
+				<connector uid="121" polarity="-" isee:polarity_placement="inside" angle="341.076">
+					<from>
+						<alias uid="122"/>
+					</from>
+					<to>&quot;Aggressor_become_active_(FN-R)&quot;</to>
+				</connector>
+				<connector uid="123" polarity="-" isee:polarity_placement="inside" angle="234.437">
+					<from>
+						<alias uid="124"/>
+					</from>
+					<to>&quot;Aggressor_become_active_(FN-R)&quot;</to>
+				</connector>
+				<connector uid="125" polarity="-" isee:polarity_placement="inside" angle="221.82">
+					<from>
+						<alias uid="126"/>
+					</from>
+					<to>&quot;Aggressor_become_active_(FN-R)&quot;</to>
+				</connector>
+				<stock label_side="center" x="2341.33" y="3103.08" width="100" height="61.3333" name="Active cases\nFN R"/>
+				<connector uid="127" polarity="+" isee:polarity_placement="inside" angle="298.033">
+					<from>Unconditional_release_false_negative_case</from>
+					<to>&quot;Aggressor_become_active_(FN-R)&quot;</to>
+				</connector>
+				<connector uid="128" polarity="+" isee:polarity_placement="inside" angle="340.346">
+					<from>
+						<alias uid="129"/>
+					</from>
+					<to>Perpetration</to>
+				</connector>
+				<connector uid="130" polarity="+" isee:polarity_placement="inside" angle="353.884">
+					<from>
+						<alias uid="131"/>
+					</from>
+					<to>Perpetration</to>
+				</connector>
+				<connector uid="132" polarity="+" isee:polarity_placement="inside" angle="9.24611">
+					<from>
+						<alias uid="133"/>
+					</from>
+					<to>Perpetration</to>
+				</connector>
+				<connector uid="134" polarity="+" isee:polarity_placement="inside" angle="5.00064">
+					<from>
+						<alias uid="135"/>
+					</from>
+					<to>Perpetration</to>
+				</connector>
+				<connector uid="136" polarity="+" isee:polarity_placement="inside" angle="16.9908">
+					<from>
+						<alias uid="137"/>
+					</from>
+					<to>Perpetration</to>
+				</connector>
+				<connector uid="138" polarity="+" isee:polarity_placement="inside" angle="13.4486">
+					<from>
+						<alias uid="139"/>
+					</from>
+					<to>Perpetration</to>
+				</connector>
+				<connector uid="140" polarity="+" isee:polarity_placement="inside" angle="5.64225">
+					<from>
+						<alias uid="141"/>
+					</from>
+					<to>Correctly_assessed_as_HR</to>
+				</connector>
+				<connector uid="142" polarity="+" isee:polarity_placement="inside" angle="343.99">
+					<from>
+						<alias uid="143"/>
+					</from>
+					<to>Wrongly_assessed_as_HR</to>
+				</connector>
+				<connector uid="144" polarity="+" isee:polarity_placement="inside" angle="344.362">
+					<from>
+						<alias uid="145"/>
+					</from>
+					<to>Correctly_assessed_as_LR</to>
+				</connector>
+				<connector uid="146" polarity="+" isee:polarity_placement="inside" angle="341.046">
+					<from>
+						<alias uid="147"/>
+					</from>
+					<to>Wrongly_assessed_as_LR</to>
+				</connector>
+				<stacked_container uid="148" x="2985" y="1431.67" width="375" height="505">
+					<table interval="1" report_balances="beginning" report_flows="instantaneous" x="2985" y="1431.67" width="375" height="505" title="Table">
+						<item type="time"/>
+						<item>
+							<entity name="IPV_criminal_cases_in_Court"/>
+						</item>
+					</table>
+				</stacked_container>
+				<stacked_container uid="149" x="3570.13" y="1601.75">
+					<graph isee:graph_area_color="white" x="3395.13" y="1476.75" width="350" height="250" type="time_series" show_grid="false" include_units_in_legend="false" plot_numbers="false" isee:label_pie_slices="false" num_x_grid_lines="0" num_y_grid_lines="0" num_x_labels="5" num_y_labels="3" title="IPV criminal cases in Court" isee:fill_intensity="0.1" left_axis_multi_scale="false" left_axis_auto_scale="true" right_axis_multi_scale="false" right_axis_auto_scale="true">
+						<plot color="blue" title="IPV criminal cases in Court" pen_width="1" index="0" show_y_axis="true">
+							<entity name="IPV_criminal_cases_in_Court"/>
+							<scale min="3500" max="8000"/>
+						</plot>
+					</graph>
+				</stacked_container>
+				<aux x="2164" y="1312.5" name="Proportion of\nreplacing violence\nwith coercive control LR"/>
+				<connector uid="150" polarity="+" isee:polarity_placement="inside" angle="205.462">
+					<from>Proportion_of_replacing_violence_with_coercive_control_LR</from>
+					<to>&quot;Aggressor_replace_violence_with_coercive_control_(FP-RR)&quot;</to>
+				</connector>
+				<connector uid="151" polarity="+" isee:polarity_placement="inside" angle="180">
+					<from>
+						<alias uid="152"/>
+					</from>
+					<to>&quot;Aggressor_replace_violence_with_coercive_control_(LR-R)&quot;</to>
+				</connector>
+				<connector uid="153" polarity="+" isee:polarity_placement="inside" angle="184.906">
+					<from>
+						<alias uid="154"/>
+					</from>
+					<to>&quot;Aggressor_replace_violence_with_coercive_control_(FP-D)&quot;</to>
+				</connector>
+				<connector uid="155" polarity="-" isee:polarity_placement="inside" angle="263.991">
+					<from>
+						<alias uid="156"/>
+					</from>
+					<to>&quot;Aggressor_become_active_(FP-RR)&quot;</to>
+				</connector>
+				<connector uid="157" polarity="-" isee:polarity_placement="inside" angle="263.991">
+					<from>
+						<alias uid="158"/>
+					</from>
+					<to>&quot;Aggressor_become_active_(FP-D)&quot;</to>
+				</connector>
+				<connector uid="159" polarity="-" isee:polarity_placement="inside" angle="263.991">
+					<from>
+						<alias uid="160"/>
+					</from>
+					<to>&quot;Aggressor_become_active_(LR-R)&quot;</to>
+				</connector>
+				<aux x="2076.67" y="1168.83" name="Proportion of stopping\nviolence and control LR"/>
+				<connector uid="161" polarity="+" isee:polarity_placement="inside" angle="267.996">
+					<from>Proportion_of_stopping_violence_and_control_LR</from>
+					<to>&quot;Aggressor_stops_violence_and_control_(FP-RR)&quot;</to>
+				</connector>
+				<connector uid="162" polarity="+" isee:polarity_placement="inside" angle="285.945">
+					<from>
+						<alias uid="163"/>
+					</from>
+					<to>&quot;Aggressor_stops_violence_and_control_(FP-D)&quot;</to>
+				</connector>
+				<connector uid="164" polarity="+" isee:polarity_placement="inside" angle="332.502">
+					<from>
+						<alias uid="165"/>
+					</from>
+					<to>&quot;Aggressor_stops_violence_and_control_(LR-R)&quot;</to>
+				</connector>
+				<connector uid="166" polarity="-" isee:polarity_placement="inside" angle="297.759">
+					<from>
+						<alias uid="167"/>
+					</from>
+					<to>&quot;Aggressor_become_active_(FP-RR)&quot;</to>
+				</connector>
+				<connector uid="168" polarity="-" isee:polarity_placement="inside" angle="309.065">
+					<from>
+						<alias uid="169"/>
+					</from>
+					<to>&quot;Aggressor_become_active_(FP-D)&quot;</to>
+				</connector>
+				<connector uid="170" polarity="-" isee:polarity_placement="inside" angle="308.259">
+					<from>
+						<alias uid="171"/>
+					</from>
+					<to>&quot;Aggressor_become_active_(LR-R)&quot;</to>
+				</connector>
+				<graphics_frame fill="none" uid="172" x="3779.17" y="1491.67" width="356.667" height="248.333">
+					<image width="600" height="350" size_to_parent="true">data:image/png;base64,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q0Q2m0UoFML09LTpHb9xX9od4yVa1bT/JEnC9PS07e3XzrWskWQyqTv2RTe33Qd2OrUvgdrt3cxg8k7tSy0xfUmzOrUvJUnSPUAAVFvY7AbL7dZLdonWzmYaJtqplxrlb6bOakdXpVKpOLrEC2acD0TQdhdYzeHSKF3batHsHYzZvDNA/bmszOYMqZdutt5255syzs8iaNfRag6XeunGvzfTbWMcVyNo53ixmsPFbO4akd/O/C/11JsTRzuPUDNzsGjzv3r1qm6a1UWt3nK1x7DV/C/G8XIivyRJlstuxGy5xmO80dxixjm4tPmNac3sS7PlAvpjvNH8X/WuOWbnXyQSMW1ZMePEtczsmiPyG/dHM3OadXJfGsvdzNxJnd6X4nrW7Ji6Tu9L4zo1s83arZfq1R/xeLxm2c3MgdhuvWSV3858aO26dAEWERER0UW7lF2ERERERBeJARYRERGRwxhgERERETmMARZeyiJVAAAGlUlEQVQRERGRwxhgERERETmMARYRERGRwxhgERERETmMARYRERGRwxhgERERETmMARYRERGRwxhgERERETmMARYRERGRwxhgERERETmMARYRERGRwxhgERERETmMARYRERGRwxhgERERETmMARYRERGRwxhgERERETmMARYRERGRwxhgERERETmMARYRERGRwxhgERFRx6XTaYRCoYsuBtG5YYBFZGFpaQmhUAihUAiRSESXFgqFkE6nbS0nm80iFAohm806XsZkMtnysrXrFwqFkEwmHS9fPc1sv3rOu/xWZTbuZ/Fe+y8Wi+mWZ1bmWCyGaDTadnnbOTbayUv0ueu96AIQfcxisRhyuRzi8TiAaoWTTCYxNTV1wSXTm5qaaqlM0WgUhUJBXT8AiEQiuHfvHnw+n5NF7IhPqfwLCwvw+XzIZrOYn5+HJEmYmpqC3+9HLper+fz6+jqCwWDb39vqsdFuXqLPHQMsogYKhQI8Ho/6XlQ2opIEgJWVFaysrCAcDiMQCLT8Xel0GisrK+p7v9+Pubk5ANXALpVKYXl5WU2PRCIIBoOYmppS8xoDDUVRapYlJJNJXfAoaL+j3TKtrq5icnISqVRKl7/e9jNuR/E5EZxcZPm/+uor/P3vf68pc7P73Ofz6YKq+/fv68ooyq0oSt3gJplMIpFIqO/j8XhNecW6ao8Ns30SDAbx4MEDdX/IsozFxUXd9hPbuNE+FWKxmJomymaH2TrZWWa949y4POO+sjo/iNrFAIs6olQqYWtrCwAwOjqKgYEBx9Pz+TwqlQq8Xq/j6YKo/KLRqFrpANVKMh6PIxQKtR1YAR8qMu2yRFfS7Oxs08uLxWLweDy64MEol8tBluWOlklRFLWFSQRL6XQagUDAdPutra1hbW1Nff/y5UvIsmzaGnXe5Rec2udCIBDA6uqqrmV0bW0Nfr/f9PPpdBqJREINOpPJJGKxGO7cuWNa3kbrJLZRKpVS84guy3rBXaN9mkwmdd8fjUaxtLRkGbzUW6fZ2dmGy6x3nBuXJ9ZT7DM75wdRuzgGizpia2sLR0dHODo6UgMlp9MPDw9RLBYt07e3t5tOF0QgkMvlEAqFHBkTY0ZUqNpKOxgMmnYd2WUnryRJHS+TqFx9Ph9kWUY+n6/72fv37yOTyajv19fX6wYawPmW3ynpdBqZTAb3799X/zY5Oalb71wup0vXEuslgs6pqSldwGinvOIzYtuEw2E1ze/3qy07VvmN+3Rqakr3/bIsWy7Lap2slmm2P43LCwQCkCRJN9atnXOLyA62YNGlVKlU1NdnZ2dNpxuJu+dIJFLTmuUUbVckUA0eCoVCS8sSlZN4asusi+28yyQ0qnC1rTler7dhN5kdnSh/q0QXHFDbXfXgwQOkUilks1lsbm4CQMMWMuN6Oa3ZbaTdp9FoVBe8NGpl1Gq0TvWW2eg4z2QydZ9adOr8IGqEARZ1xOjoqNqy5PV6zz19bGzMMv3du3fqsuwKBoO6sSBOMlZqiqKolY7ZOliZnZ3F7OwsYrEYvvvuu5ruEFmWdWNUzqNMdojWHFmWG7Zefazlr6dRJS5agl6+fIlCoYDJycmGy7qoINHK0tISgA83JOIhETvqrZPVMusd51bjqqzOD6J2sYuQOmJgYAATExOYmJjAlStXPsr0W7du4datW6bpQiQS0T2inslkdHfakiTpurzEXD/NTj0gusa0+cRAZQAYHx+HoihqeiwWs9X1IspoZmpqCpIk1XR7RqNRZLPZjpZJWzZjl+GdO3eQy+Wwvr5et5vsIstvVmYn+P1+rK+vI5PJ4MGDB3U/J8syMpmMelyK8UofC+3xtr6+biuP1TrZWab2M2Lf25leolE3M1E72IJF1MDMzIyua0f7hBVQbW1JJBLqgFo7tMuTJAnLy8sIBALI5/Pq02kAMD09rXaP+Xw+BINBNd3v9zfsejF2qdQr2/LyMqLRqK4rZXp6Gj6fDz6fz9EymTFuP5/Pp3YTAo27yS6q/GZldsLU1BQSiUTdQf3azymKoh5H4hhqdz4xJ8zNzalzfQH2xnMB9dfJapn1jnNxPmnPNZHu8/lsnx9E7eiqaAejEBF9BKLRKCRJ4qPzRPTJYhchEX10Gj1FR0T0KWCARUQfFfEovVPzTBERXQR2ERIRERE5jC1YRERERA5jgEVERETkMAZYRERERA5jgEVERETkMAZYRERERA5jgEVERETkMAZYRERERA5jgEVERETksP8PtnvA7MEcuIQAAAAASUVORK5CYII=</image>
+				</graphics_frame>
+				<flow x="2559.42" y="526.836" name="HR RR\nbeing inactive">
+					<pts>
+						<pt x="2509.08" y="526.836"/>
+						<pt x="2633.75" y="526.836"/>
+					</pts>
+				</flow>
+				<aux x="2627.42" y="441.167" name="TC of HR being inactive"/>
+				<connector uid="173" angle="270.429">
+					<from>TC_of_HR_being_inactive</from>
+					<to>HR_RR_being_inactive</to>
+				</connector>
+				<connector uid="174" angle="20.3013">
+					<from>Active_cases_HR_RR</from>
+					<to>HR_RR_being_inactive</to>
+				</connector>
+				<flow x="2519.42" y="1072.5" name="HR D\nbeing inactive">
+					<pts>
+						<pt x="2444.08" y="1072.5"/>
+						<pt x="2618.75" y="1072.5"/>
+					</pts>
+				</flow>
+				<connector uid="175" angle="315">
+					<from>
+						<alias uid="176"/>
+					</from>
+					<to>HR_D_being_inactive</to>
+				</connector>
+				<connector uid="177" angle="15.4278">
+					<from>Active_cases_HR_D</from>
+					<to>HR_D_being_inactive</to>
+				</connector>
+				<flow x="2510.29" y="3133.75" name="FN R\nbeing inactive">
+					<pts>
+						<pt x="2441.33" y="3133.75"/>
+						<pt x="2603.25" y="3133.75"/>
+					</pts>
+				</flow>
+				<connector uid="178" angle="315">
+					<from>
+						<alias uid="179"/>
+					</from>
+					<to>FN_R_being_inactive</to>
+				</connector>
+				<connector uid="180" angle="19.0152">
+					<from>Active_cases_FN_R</from>
+					<to>FN_R_being_inactive</to>
+				</connector>
+				<flow x="2522.75" y="1595" name="FP RR\nbeing inactive">
+					<pts>
+						<pt x="2460.75" y="1595"/>
+						<pt x="2608.75" y="1595"/>
+					</pts>
+				</flow>
+				<aux x="2574.42" y="1527.42" name="TC of LR being inactive"/>
+				<connector uid="181" angle="270.429">
+					<from>TC_of_LR_being_inactive</from>
+					<to>FP_RR_being_inactive</to>
+				</connector>
+				<connector uid="182" angle="18.0399">
+					<from>Active_cases_FP_RR</from>
+					<to>FP_RR_being_inactive</to>
+				</connector>
+				<flow x="2513.59" y="2087" name="FP D\nbeing inactive">
+					<pts>
+						<pt x="2452.67" y="2087"/>
+						<pt x="2598.5" y="2087"/>
+					</pts>
+				</flow>
+				<connector uid="183" angle="259.114">
+					<from>
+						<alias uid="184"/>
+					</from>
+					<to>FP_D_being_inactive</to>
+				</connector>
+				<connector uid="185" angle="22.6408">
+					<from>Active_cases_FP_D</from>
+					<to>FP_D_being_inactive</to>
+				</connector>
+				<flow x="2533.84" y="2587" name="LR R\nbeing inactive">
+					<pts>
+						<pt x="2478.17" y="2587"/>
+						<pt x="2613.5" y="2587"/>
+					</pts>
+				</flow>
+				<connector uid="186" angle="259.114">
+					<from>
+						<alias uid="187"/>
+					</from>
+					<to>LR_R_being_inactive</to>
+				</connector>
+				<connector uid="188" angle="21.813">
+					<from>Active_cases_LR_R</from>
+					<to>LR_R_being_inactive</to>
+				</connector>
+				<flow x="3689.85" y="962.17" name="Not-reported\nIPV incidents\nbeing inactive">
+					<pts>
+						<pt x="3631.19" y="962.17"/>
+						<pt x="3772.5" y="962.17"/>
+					</pts>
+				</flow>
+				<connector uid="189" angle="31.1634">
+					<from>IPV_incidents</from>
+					<to>&quot;Not-reported_IPV_incidents_being_inactive&quot;</to>
+				</connector>
+				<aux x="3745" y="881.668" name="TC of general being inactive"/>
+				<connector uid="190" angle="303.115">
+					<from>TC_of_general_being_inactive</from>
+					<to>&quot;Not-reported_IPV_incidents_being_inactive&quot;</to>
+				</connector>
+				<connector uid="191" angle="134.458">
+					<from>
+						<alias uid="192"/>
+					</from>
+					<to>&quot;Not-reported_IPV_incidents_being_inactive&quot;</to>
+				</connector>
+				<aux x="892.829" y="630.459" name="Learn from wrong\nrisk assessment"/>
+				<aux x="626.996" y="504.375" name="Proportion of\nlearning from errors"/>
+				<connector uid="193" polarity="+" isee:polarity_placement="inside" angle="280.338">
+					<from>
+						<alias uid="194"/>
+					</from>
+					<to>Learn_from_wrong_risk_assessment</to>
+				</connector>
+				<connector uid="195" polarity="+" isee:polarity_placement="inside" angle="242.021">
+					<from>
+						<alias uid="196"/>
+					</from>
+					<to>Learn_from_wrong_risk_assessment</to>
+				</connector>
+				<connector uid="197" polarity="+" isee:polarity_placement="inside" angle="232.432">
+					<from>
+						<alias uid="198"/>
+					</from>
+					<to>Learn_from_wrong_risk_assessment</to>
+				</connector>
+				<connector uid="199" polarity="+" isee:polarity_placement="inside" angle="295.279">
+					<from>Proportion_of_learning_from_errors</from>
+					<to>Learn_from_wrong_risk_assessment</to>
+				</connector>
+				<aux x="4858.5" y="1356.08" name="Initial value of\nUnconditional\nrelease false negatives"/>
+				<aux x="5372.83" y="395.252" name="Initial values of\nDV incidents"/>
+				<aux x="5803.25" y="708.329" name="Initial value of\nActive cases\nFP RR"/>
+				<aux label_side="bottom" x="4450.5" y="1159.08" name="Initial value of\nLR case"/>
+				<aux color="#FF007F" font_color="#FF007F" x="5460.92" y="317.162" name="Initial proportion of DV\nincidents reported"/>
+				<connector uid="200" angle="248.197">
+					<from>Initial_proportion_of_DV_incidents_reported</from>
+					<to>Initial_values_of_DV_incidents</to>
+				</connector>
+				<aux x="4444.63" y="1357.75" name="Initial value of\nFalse negatives"/>
+				<aux x="5833.25" y="518.329" name="Initial value of\nActive cases\nHR D"/>
+				<aux x="4459.63" y="232.752" name="Initial value of\nHR case"/>
+				<aux x="5809.58" y="238.829" name="Initial value of\nActive cases\nHR RR"/>
+				<aux x="4872.84" y="699.082" name="Initial value of\nRestricted release\nfalse positives"/>
+				<aux x="4866.17" y="924.08" name="Initial value of\nPretrial detain\nfalse positives"/>
+				<aux color="#FF007F" font_color="#FF007F" x="4114.33" y="287.662" name="Initial value of\nIPV criminal\ncases in Court"/>
+				<aux label_side="bottom" x="4874.84" y="238.752" name="Initial value of\nRestricted release\nHR case"/>
+				<aux label_side="bottom" x="4864.84" y="1144.41" name="Initial value of\nUnconditional\nrelease LR case"/>
+				<aux x="4598.8" y="158.142" name="Initial validity of risk\nassessment"/>
+				<connector uid="201" angle="242.069">
+					<from>Initial_validity_of_risk_assessment</from>
+					<to>Initial_value_of_HR_case</to>
+				</connector>
+				<aux x="5076.09" y="180.912" name="initial proportion of\ndecision on detention"/>
+				<connector uid="202" angle="209.806">
+					<from>initial_proportion_of_decision_on_detention</from>
+					<to>Initial_value_of_Restricted_release_HR_case</to>
+				</connector>
+				<aux x="4431.63" y="735.752" name="Initial value of\nFalse positives"/>
+				<aux color="blue" label_side="bottom" x="4459.63" y="140.662" name="Initial proportion of\nHR case"/>
+				<connector uid="203" angle="290.084">
+					<from>Initial_proportion_of_HR_case</from>
+					<to>Initial_value_of_HR_case</to>
+				</connector>
+				<aux x="5830.25" y="1379.16" name="Initial value of\nActive cases\nFN R"/>
+				<aux x="5817.59" y="1140.99" name="Initial value of\nActive cases\nLR R"/>
+				<aux x="5822.58" y="930" name="Initial value of\nActive cases\nFP D"/>
+				<aux x="4874.84" y="470.002" name="Initial value of\nPretrial detain\nHR case"/>
+				<connector uid="204" angle="260.924">
+					<from>
+						<alias uid="205"/>
+					</from>
+					<to>Initial_value_of_Active_cases_FP_D</to>
+				</connector>
+				<connector uid="206" angle="276.975">
+					<from>
+						<alias uid="207"/>
+					</from>
+					<to>Initial_value_of_Active_cases_LR_R</to>
+				</connector>
+				<connector uid="208" angle="251.906">
+					<from>
+						<alias uid="209"/>
+					</from>
+					<to>Initial_value_of_Active_cases_FN_R</to>
+				</connector>
+				<connector uid="210" angle="266.144">
+					<from>
+						<alias uid="211"/>
+					</from>
+					<to>Initial_value_of_Active_cases_HR_RR</to>
+				</connector>
+				<connector uid="212" angle="278.555">
+					<from>
+						<alias uid="213"/>
+					</from>
+					<to>Initial_value_of_Active_cases_HR_D</to>
+				</connector>
+				<connector uid="214" angle="245.411">
+					<from>
+						<alias uid="215"/>
+					</from>
+					<to>Initial_value_of_Active_cases_FP_RR</to>
+				</connector>
+				<connector uid="216" angle="232.792">
+					<from>
+						<alias uid="217"/>
+					</from>
+					<to>Initial_value_of_Active_cases_LR_R</to>
+				</connector>
+				<connector uid="218" angle="277.673">
+					<from>
+						<alias uid="219"/>
+					</from>
+					<to>Initial_value_of_Active_cases_FP_RR</to>
+				</connector>
+				<connector uid="220" angle="261.306">
+					<from>
+						<alias uid="221"/>
+					</from>
+					<to>Initial_value_of_Active_cases_HR_D</to>
+				</connector>
+				<connector uid="222" angle="277.401">
+					<from>
+						<alias uid="223"/>
+					</from>
+					<to>Initial_value_of_Active_cases_HR_RR</to>
+				</connector>
+				<connector uid="224" angle="298.359">
+					<from>
+						<alias uid="225"/>
+					</from>
+					<to>Initial_value_of_Active_cases_HR_D</to>
+				</connector>
+				<connector uid="226" angle="280.753">
+					<from>
+						<alias uid="227"/>
+					</from>
+					<to>Initial_value_of_Active_cases_FN_R</to>
+				</connector>
+				<connector uid="228" angle="259.487">
+					<from>
+						<alias uid="229"/>
+					</from>
+					<to>Initial_value_of_Pretrial_detain_false_positives</to>
+				</connector>
+				<connector uid="230" angle="247.134">
+					<from>
+						<alias uid="231"/>
+					</from>
+					<to>Initial_value_of_Active_cases_FP_D</to>
+				</connector>
+				<connector uid="232" angle="287.139">
+					<from>
+						<alias uid="233"/>
+					</from>
+					<to>Initial_value_of_Restricted_release_HR_case</to>
+				</connector>
+				<connector uid="234" angle="247.166">
+					<from>
+						<alias uid="235"/>
+					</from>
+					<to>Initial_value_of_False_positives</to>
+				</connector>
+				<connector uid="236" angle="261.87">
+					<from>
+						<alias uid="237"/>
+					</from>
+					<to>Initial_value_of_LR_case</to>
+				</connector>
+				<connector uid="238" angle="256.123">
+					<from>
+						<alias uid="239"/>
+					</from>
+					<to>Initial_value_of_False_negatives</to>
+				</connector>
+				<connector uid="240" angle="259.285">
+					<from>
+						<alias uid="241"/>
+					</from>
+					<to>Initial_value_of_Restricted_release_HR_case</to>
+				</connector>
+				<connector uid="242" angle="250.841">
+					<from>
+						<alias uid="243"/>
+					</from>
+					<to>Initial_value_of_Restricted_release_false_positives</to>
+				</connector>
+				<connector uid="244" angle="294.52">
+					<from>
+						<alias uid="245"/>
+					</from>
+					<to>Initial_value_of_Pretrial_detain_HR_case</to>
+				</connector>
+				<connector uid="246" angle="271.79">
+					<from>
+						<alias uid="247"/>
+					</from>
+					<to>Initial_value_of_Unconditional_release_LR_case</to>
+				</connector>
+				<connector uid="248" angle="276.587">
+					<from>
+						<alias uid="249"/>
+					</from>
+					<to>Initial_value_of_Unconditional_release_false_negatives</to>
+				</connector>
+				<connector uid="250" angle="288.616">
+					<from>
+						<alias uid="251"/>
+					</from>
+					<to>Initial_value_of_Restricted_release_false_positives</to>
+				</connector>
+				<connector uid="252" angle="304.662">
+					<from>
+						<alias uid="253"/>
+					</from>
+					<to>Initial_value_of_Active_cases_LR_R</to>
+				</connector>
+				<connector uid="254" angle="313.633">
+					<from>
+						<alias uid="255"/>
+					</from>
+					<to>Initial_value_of_Pretrial_detain_false_positives</to>
+				</connector>
+				<connector uid="256" angle="282.2">
+					<from>
+						<alias uid="257"/>
+					</from>
+					<to>Initial_value_of_Active_cases_HR_RR</to>
+				</connector>
+				<connector uid="258" angle="287.825">
+					<from>
+						<alias uid="259"/>
+					</from>
+					<to>Initial_value_of_Unconditional_release_false_negatives</to>
+				</connector>
+				<connector uid="260" angle="266.643">
+					<from>
+						<alias uid="261"/>
+					</from>
+					<to>Initial_value_of_Active_cases_FP_RR</to>
+				</connector>
+				<connector uid="262" angle="335.326">
+					<from>
+						<alias uid="263"/>
+					</from>
+					<to>Initial_value_of_Active_cases_FP_D</to>
+				</connector>
+				<connector uid="264" angle="279.859">
+					<from>
+						<alias uid="265"/>
+					</from>
+					<to>Initial_value_of_Pretrial_detain_HR_case</to>
+				</connector>
+				<connector uid="266" angle="283.392">
+					<from>
+						<alias uid="267"/>
+					</from>
+					<to>Initial_value_of_HR_case</to>
+				</connector>
+				<connector uid="268" angle="270">
+					<from>
+						<alias uid="269"/>
+					</from>
+					<to>Initial_values_of_DV_incidents</to>
+				</connector>
+				<connector uid="270" angle="296.565">
+					<from>
+						<alias uid="271"/>
+					</from>
+					<to>Initial_value_of_Active_cases_FN_R</to>
+				</connector>
+				<connector uid="272" angle="301.43">
+					<from>
+						<alias uid="273"/>
+					</from>
+					<to>Initial_value_of_False_positives</to>
+				</connector>
+				<connector uid="274" angle="275.204">
+					<from>
+						<alias uid="275"/>
+					</from>
+					<to>Initial_value_of_False_positives</to>
+				</connector>
+				<connector uid="276" angle="276.829">
+					<from>
+						<alias uid="277"/>
+					</from>
+					<to>Initial_value_of_LR_case</to>
+				</connector>
+				<connector uid="278" angle="260.237">
+					<from>
+						<alias uid="279"/>
+					</from>
+					<to>Initial_value_of_False_negatives</to>
+				</connector>
+				<connector uid="280" angle="228.551">
+					<from>
+						<alias uid="281"/>
+					</from>
+					<to>Initial_value_of_Restricted_release_HR_case</to>
+				</connector>
+				<connector uid="282" angle="247.593">
+					<from>
+						<alias uid="283"/>
+					</from>
+					<to>Initial_value_of_Pretrial_detain_HR_case</to>
+				</connector>
+				<connector uid="284" angle="295.605">
+					<from>
+						<alias uid="285"/>
+					</from>
+					<to>Initial_value_of_Restricted_release_false_positives</to>
+				</connector>
+				<connector uid="286" angle="280.187">
+					<from>
+						<alias uid="287"/>
+					</from>
+					<to>Initial_value_of_Pretrial_detain_false_positives</to>
+				</connector>
+				<connector uid="288" angle="297.519">
+					<from>
+						<alias uid="289"/>
+					</from>
+					<to>Initial_value_of_Unconditional_release_LR_case</to>
+				</connector>
+				<connector uid="290" angle="322.487">
+					<from>
+						<alias uid="291"/>
+					</from>
+					<to>Initial_value_of_Unconditional_release_false_negatives</to>
+				</connector>
+				<connector uid="292" angle="308.067">
+					<from>
+						<alias uid="293"/>
+					</from>
+					<to>Initial_value_of_Unconditional_release_LR_case</to>
+				</connector>
+				<connector uid="294" angle="278.53">
+					<from>
+						<alias uid="295"/>
+					</from>
+					<to>Initial_value_of_LR_case</to>
+				</connector>
+				<connector uid="296" angle="303.308">
+					<from>
+						<alias uid="297"/>
+					</from>
+					<to>Initial_value_of_False_negatives</to>
+				</connector>
+				<connector uid="298" angle="220.365">
+					<from>
+						<alias uid="299"/>
+					</from>
+					<to>Initial_value_of_Pretrial_detain_HR_case</to>
+				</connector>
+				<connector uid="300" angle="229.399">
+					<from>
+						<alias uid="301"/>
+					</from>
+					<to>Initial_value_of_Restricted_release_false_positives</to>
+				</connector>
+				<connector uid="302" angle="226.772">
+					<from>
+						<alias uid="303"/>
+					</from>
+					<to>Initial_value_of_Pretrial_detain_false_positives</to>
+				</connector>
+				<group locked="false" color="red" font_size="16pt" x="4003.5" y="53.582" width="2155" height="1423.17" name="Initial value">
+					<item uid="267"/>
+					<item uid="233"/>
+					<item uid="283"/>
+					<item uid="281"/>
+					<item uid="265"/>
+					<item uid="241"/>
+					<item uid="269"/>
+					<item uid="211"/>
+					<item uid="223"/>
+					<item uid="257"/>
+					<item uid="275"/>
+					<item uid="235"/>
+					<item uid="273"/>
+					<item uid="285"/>
+					<item uid="245"/>
+					<item uid="251"/>
+					<item uid="301"/>
+					<item uid="299"/>
+					<item uid="243"/>
+					<item uid="261"/>
+					<item uid="225"/>
+					<item uid="213"/>
+					<item uid="215"/>
+					<item uid="219"/>
+					<item uid="221"/>
+					<item uid="277"/>
+					<item uid="295"/>
+					<item uid="237"/>
+					<item uid="287"/>
+					<item uid="289"/>
+					<item uid="255"/>
+					<item uid="229"/>
+					<item uid="247"/>
+					<item uid="303"/>
+					<item uid="253"/>
+					<item uid="205"/>
+					<item uid="207"/>
+					<item uid="217"/>
+					<item uid="263"/>
+					<item uid="231"/>
+					<item uid="279"/>
+					<item uid="297"/>
+					<item uid="239"/>
+					<item uid="291"/>
+					<item uid="259"/>
+					<item uid="293"/>
+					<item uid="249"/>
+					<item uid="271"/>
+					<item uid="209"/>
+					<item uid="227"/>
+				</group>
+				<group locked="true" font_size="16pt" x="2962.5" y="573.67" width="980.417" height="794" name="Final">
+					<item uid="11"/>
+					<item uid="135"/>
+					<item uid="132"/>
+					<item uid="138"/>
+					<item uid="139"/>
+					<item uid="129"/>
+					<item uid="130"/>
+					<item uid="12"/>
+					<item uid="3"/>
+					<item uid="4"/>
+					<item uid="136"/>
+					<item uid="192"/>
+					<item uid="190"/>
+					<item uid="304"/>
+					<item uid="133"/>
+					<item uid="189"/>
+					<item uid="10"/>
+					<item uid="131"/>
+					<item uid="305"/>
+					<item uid="191"/>
+					<item uid="134"/>
+					<item uid="137"/>
+					<item uid="128"/>
+				</group>
+				<group locked="false" x="458.33" y="409.293" width="715.087" height="293.087" name="Learning from error">
+					<item uid="194"/>
+					<item uid="196"/>
+					<item uid="198"/>
+				</group>
+				<connector uid="306" polarity="+" isee:polarity_placement="inside" angle="177.175">
+					<from>
+						<alias uid="305"/>
+					</from>
+					<to>&quot;Not-reported_IPV_incidents_being_inactive&quot;</to>
+				</connector>
+				<connector uid="307" polarity="+" isee:polarity_placement="inside" angle="181.475">
+					<from>
+						<alias uid="304"/>
+					</from>
+					<to>&quot;Not-reported_IPV_incidents_being_inactive&quot;</to>
+				</connector>
+				<aux x="292.75" y="1699" name="TC of court\nadministration"/>
+				<connector uid="308" polarity="-" isee:polarity_placement="inside" angle="257.851">
+					<from>TC_of_court_administration</from>
+					<to>IPV_criminality_report</to>
+				</connector>
+				<connector uid="309" polarity="+" isee:polarity_placement="inside" angle="299.814">
+					<from>Learn_from_wrong_risk_assessment</from>
+					<to>validity_of_risk_assessment</to>
+				</connector>
+				<alias font_style="italic" uid="52" x="1506.33" y="764.485" width="18" height="18">
+					<of>TC_of_decision_making</of>
+				</alias>
+				<alias font_style="italic" uid="36" x="1701" y="1242.67" width="18" height="18">
+					<of>Proportion_of_decision_on_detention</of>
+				</alias>
+				<alias font_style="italic" uid="44" x="1615.17" y="764.485" width="18" height="18">
+					<of>Proportion_of_decision_on_detention</of>
+				</alias>
+				<alias font_style="italic" uid="20" x="993.5" y="1680" width="18" height="18">
+					<of>TC_of_assessment</of>
+				</alias>
+				<alias font_style="italic" uid="42" x="1073.92" y="2777.67" width="18" height="18">
+					<of>TC_of_assessment</of>
+				</alias>
+				<alias font_style="italic" uid="48" x="1541" y="2772.65" width="18" height="18">
+					<of>TC_of_decision_making</of>
+				</alias>
+				<alias font_style="italic" uid="40" x="1028.92" y="2257.33" width="18" height="18">
+					<of>TC_of_assessment</of>
+				</alias>
+				<alias font_style="italic" uid="22" x="1493" y="2266.83" width="18" height="18">
+					<of>TC_of_decision_making</of>
+				</alias>
+				<alias font_style="italic" uid="50" x="1563.42" y="1257.67" width="18" height="18">
+					<of>TC_of_decision_making</of>
+				</alias>
+				<alias font_style="italic" uid="54" x="1398.5" y="1708" width="18" height="18">
+					<of>TC_of_decision_making</of>
+				</alias>
+				<alias font_style="italic" uid="46" x="1546" y="1708" width="18" height="18">
+					<of>Proportion_of_decision_on_detention</of>
+				</alias>
+				<alias font_style="italic" uid="28" x="878.959" y="1674.33" width="18" height="18">
+					<of>validity_of_risk_assessment</of>
+				</alias>
+				<alias font_style="italic" uid="38" x="771.251" y="1689.92" width="18" height="18">
+					<of>proportion_of_HR_case</of>
+				</alias>
+				<alias font_style="italic" uid="24" x="250.25" y="1916.33" width="85" height="40.5">
+					<of>IPV_incidents</of>
+				</alias>
+				<alias font_style="italic" uid="26" x="951.001" y="2772.65" width="18" height="18">
+					<of>validity_of_risk_assessment</of>
+				</alias>
+				<alias font_style="italic" uid="34" x="832.667" y="2777.67" width="18" height="18">
+					<of>proportion_of_HR_case</of>
+				</alias>
+				<alias font_style="italic" uid="32" x="796.751" y="2251.33" width="18" height="18">
+					<of>proportion_of_HR_case</of>
+				</alias>
+				<alias font_style="italic" uid="30" x="895.292" y="2261" width="18" height="18">
+					<of>validity_of_risk_assessment</of>
+				</alias>
+				<alias font_style="italic" uid="72" x="2228.5" y="1154.33" width="18" height="18">
+					<of>TC_of_stopping_violence_and_control</of>
+				</alias>
+				<alias font_style="italic" uid="74" x="2171" y="603.5" width="18" height="18">
+					<of>Proportion_of_stopping_violence_and_control_HR</of>
+				</alias>
+				<alias font_style="italic" uid="76" x="2337.67" y="603.5" width="18" height="18">
+					<of>TC_of_stopping_violence_and_control</of>
+				</alias>
+				<alias font_style="italic" uid="78" x="2381" y="770.167" width="18" height="18">
+					<of>TC_of_replacing_violence_with_coercive_control</of>
+				</alias>
+				<alias font_style="italic" uid="80" x="2217.67" y="770.167" width="18" height="18">
+					<of>Proportion_of_replacing_violence_with_coercive_control_HR</of>
+				</alias>
+				<alias font_style="italic" uid="82" x="2321.83" y="1303.5" width="18" height="18">
+					<of>TC_of_replacing_violence_with_coercive_control</of>
+				</alias>
+				<alias font_style="italic" uid="84" x="2180.67" y="1679" width="18" height="18">
+					<of>TC_of_stopping_violence_and_control</of>
+				</alias>
+				<alias font_style="italic" uid="86" x="2358.5" y="1799.92" width="18" height="18">
+					<of>TC_of_replacing_violence_with_coercive_control</of>
+				</alias>
+				<alias font_style="italic" uid="88" x="2381" y="2318.75" width="18" height="18">
+					<of>TC_of_replacing_violence_with_coercive_control</of>
+				</alias>
+				<alias font_style="italic" label_side="bottom" uid="90" x="1932.79" y="2685" width="18" height="18">
+					<of>Proportion_of_stopping_violence_and_control_HR</of>
+				</alias>
+				<alias font_style="italic" uid="92" x="2205.17" y="2699.5" width="18" height="18">
+					<of>TC_of_stopping_violence_and_control</of>
+				</alias>
+				<alias font_style="italic" uid="94" x="2401.33" y="2817.09" width="18" height="18">
+					<of>TC_of_replacing_violence_with_coercive_control</of>
+				</alias>
+				<alias font_style="italic" uid="96" x="2254.67" y="2792.42" width="18" height="18">
+					<of>Proportion_of_replacing_violence_with_coercive_control_HR</of>
+				</alias>
+				<alias font_style="italic" uid="98" x="2194.67" y="2187.83" width="18" height="18">
+					<of>TC_of_stopping_violence_and_control</of>
+				</alias>
+				<alias font_style="italic" uid="100" x="1987.67" y="450.167" width="18" height="18">
+					<of>Proportion_of_stopping_violence_and_control_HR</of>
+				</alias>
+				<alias font_style="italic" uid="102" x="2157.67" y="442.167" width="18" height="18">
+					<of>Proportion_of_replacing_violence_with_coercive_control_HR</of>
+				</alias>
+				<alias font_style="italic" uid="106" x="1985" y="937.667" width="18" height="18">
+					<of>Proportion_of_stopping_violence_and_control_HR</of>
+				</alias>
+				<alias font_style="italic" uid="109" x="2155" y="929.665" width="18" height="18">
+					<of>Proportion_of_replacing_violence_with_coercive_control_HR</of>
+				</alias>
+				<alias font_style="italic" uid="111" x="2306" y="931" width="18" height="18">
+					<of>TC_of_case_closure</of>
+				</alias>
+				<alias font_style="italic" uid="114" x="2292.67" y="1482.67" width="18" height="18">
+					<of>TC_of_case_closure</of>
+				</alias>
+				<alias font_style="italic" uid="116" x="2288.34" y="1972" width="18" height="18">
+					<of>TC_of_case_closure</of>
+				</alias>
+				<alias font_style="italic" uid="119" x="2326.34" y="2480.67" width="18" height="18">
+					<of>TC_of_case_closure</of>
+				</alias>
+				<alias font_style="italic" uid="122" x="1978.5" y="3018.75" width="18" height="18">
+					<of>Proportion_of_stopping_violence_and_control_HR</of>
+				</alias>
+				<alias font_style="italic" uid="124" x="2151" y="3000.75" width="18" height="18">
+					<of>Proportion_of_replacing_violence_with_coercive_control_HR</of>
+				</alias>
+				<alias font_style="italic" uid="126" x="2302" y="3002.08" width="18" height="18">
+					<of>TC_of_case_closure</of>
+				</alias>
+				<alias font_style="italic" uid="129" x="2995" y="651.501" width="100" height="61.3333">
+					<of>Active_cases_HR_RR</of>
+				</alias>
+				<alias font_style="italic" uid="131" x="2995" y="771.502" width="100" height="61.3333">
+					<of>Active_cases_HR_D</of>
+				</alias>
+				<alias font_style="italic" uid="133" x="2995" y="898.168" width="100" height="61.3333">
+					<of>Active_cases_FP_RR</of>
+				</alias>
+				<alias font_style="italic" label_side="top" uid="135" x="2996.67" y="1025.67" width="100" height="61.3333">
+					<of>Active_cases_FP_D</of>
+				</alias>
+				<alias font_style="italic" uid="137" x="3001.67" y="1144.84" width="100" height="61.3333">
+					<of>Active_cases_LR_R</of>
+				</alias>
+				<alias font_style="italic" label_side="top" uid="139" x="3005" y="1278.17" width="100" height="61.3333">
+					<of>Active_cases_FN_R</of>
+				</alias>
+				<alias font_style="italic" label_side="center" uid="141" x="690.667" y="816.002" width="88.6667" height="51.3333">
+					<of>IPV_criminal_cases_in_Court</of>
+				</alias>
+				<alias font_style="italic" label_side="center" uid="143" x="643.167" y="1774.28" width="88.6667" height="51.3333">
+					<of>IPV_criminal_cases_in_Court</of>
+				</alias>
+				<alias font_style="italic" label_side="center" uid="145" x="640.667" y="2309" width="88.6667" height="51.3333">
+					<of>IPV_criminal_cases_in_Court</of>
+				</alias>
+				<alias font_style="italic" label_side="center" uid="147" x="648.167" y="2795.67" width="88.6667" height="51.3333">
+					<of>IPV_criminal_cases_in_Court</of>
+				</alias>
+				<alias font_style="italic" uid="152" x="2241.84" y="2291" width="18" height="18">
+					<of>Proportion_of_replacing_violence_with_coercive_control_LR</of>
+				</alias>
+				<alias font_style="italic" uid="154" x="2212.67" y="1790.95" width="18" height="18">
+					<of>Proportion_of_replacing_violence_with_coercive_control_LR</of>
+				</alias>
+				<alias font_style="italic" uid="156" x="2146" y="1482.67" width="18" height="18">
+					<of>Proportion_of_replacing_violence_with_coercive_control_LR</of>
+				</alias>
+				<alias font_style="italic" uid="158" x="2141.67" y="1972" width="18" height="18">
+					<of>Proportion_of_replacing_violence_with_coercive_control_LR</of>
+				</alias>
+				<alias font_style="italic" uid="160" x="2179.67" y="2480.67" width="18" height="18">
+					<of>Proportion_of_replacing_violence_with_coercive_control_LR</of>
+				</alias>
+				<alias font_style="italic" uid="163" x="1967.67" y="1672.67" width="18" height="18">
+					<of>Proportion_of_stopping_violence_and_control_LR</of>
+				</alias>
+				<alias font_style="italic" uid="165" x="1938.5" y="2177.66" width="18" height="18">
+					<of>Proportion_of_stopping_violence_and_control_LR</of>
+				</alias>
+				<alias font_style="italic" uid="167" x="1981" y="1486" width="18" height="18">
+					<of>Proportion_of_stopping_violence_and_control_LR</of>
+				</alias>
+				<alias font_style="italic" uid="169" x="1976.67" y="1975.33" width="18" height="18">
+					<of>Proportion_of_stopping_violence_and_control_LR</of>
+				</alias>
+				<alias font_style="italic" uid="171" x="2014.67" y="2484" width="18" height="18">
+					<of>Proportion_of_stopping_violence_and_control_LR</of>
+				</alias>
+				<alias font_style="italic" uid="176" x="2537.25" y="982.25" width="18" height="18">
+					<of>TC_of_HR_being_inactive</of>
+				</alias>
+				<alias font_style="italic" uid="179" x="2545.25" y="3042.25" width="18" height="18">
+					<of>TC_of_HR_being_inactive</of>
+				</alias>
+				<alias font_style="italic" uid="184" x="2554.75" y="2008.5" width="18" height="18">
+					<of>TC_of_LR_being_inactive</of>
+				</alias>
+				<alias font_style="italic" uid="187" x="2569.75" y="2512.25" width="18" height="18">
+					<of>TC_of_LR_being_inactive</of>
+				</alias>
+				<alias font_style="italic" uid="192" x="3666.35" y="1101.5" width="18" height="18">
+					<of>Proportion_of_IPV_incidents_reported</of>
+				</alias>
+				<alias font_style="italic" label_side="center" uid="194" x="732.829" y="463.125" width="100" height="61.3333">
+					<of>Active_cases_FP_RR</of>
+				</alias>
+				<alias font_style="italic" label_side="center" uid="196" x="890.329" y="458.125" width="100" height="61.3333">
+					<of>Active_cases_FP_D</of>
+				</alias>
+				<alias font_style="italic" label_side="center" uid="198" x="1047.83" y="458.125" width="100" height="61.3333">
+					<of>Active_cases_FN_R</of>
+				</alias>
+				<alias color="blue" font_style="italic" uid="285" x="4821.17" y="585.662" width="18" height="18">
+					<of>Initial_proportion_of_HR_case</of>
+				</alias>
+				<alias font_style="italic" uid="225" x="5661.42" y="382.162" width="18" height="18">
+					<of>Initial_value_of_Pretrial_detain_HR_case</of>
+				</alias>
+				<alias font_style="italic" uid="205" x="5828.25" y="829.16" width="18" height="18">
+					<of>Proportion_of_stopping_violence_and_control_LR</of>
+				</alias>
+				<alias color="blue" font_style="italic" uid="287" x="4811.17" y="818.33" width="18" height="18">
+					<of>Initial_proportion_of_HR_case</of>
+				</alias>
+				<alias color="blue" font_style="italic" uid="279" x="4439.63" y="1232.33" width="18" height="18">
+					<of>Initial_proportion_of_HR_case</of>
+				</alias>
+				<alias color="blue" font_style="italic" label_side="bottom" uid="229" x="4967.42" y="821.66" width="18" height="18">
+					<of>Initial_validity_of_risk_assessment</of>
+				</alias>
+				<alias font_style="italic" uid="207" x="5826.59" y="1017.16" width="18" height="18">
+					<of>Proportion_of_stopping_violence_and_control_LR</of>
+				</alias>
+				<alias font_style="italic" uid="209" x="6009.25" y="1226.83" width="18" height="18">
+					<of>Proportion_of_replacing_violence_with_coercive_control_HR</of>
+				</alias>
+				<alias color="blue" font_style="italic" font_color="#FF007F" uid="267" x="4319.5" y="137.332" width="18" height="18">
+					<of>Initial_value_of_IPV_criminal_cases_in_Court</of>
+				</alias>
+				<alias color="blue" font_style="italic" uid="277" x="4434.29" y="1005.66" width="18" height="18">
+					<of>Initial_proportion_of_HR_case</of>
+				</alias>
+				<alias color="blue" font_style="italic" uid="241" x="5010.42" y="116.662" width="18" height="18">
+					<of>Initial_validity_of_risk_assessment</of>
+				</alias>
+				<alias color="blue" font_style="italic" uid="275" x="4422.63" y="605.662" width="18" height="18">
+					<of>Initial_proportion_of_HR_case</of>
+				</alias>
+				<alias color="blue" font_style="italic" font_color="#FF007F" uid="295" x="4298.08" y="1018.99" width="18" height="18">
+					<of>Initial_value_of_IPV_criminal_cases_in_Court</of>
+				</alias>
+				<alias font_style="italic" uid="211" x="6021.25" y="121.829" width="18" height="18">
+					<of>Proportion_of_replacing_violence_with_coercive_control_HR</of>
+				</alias>
+				<alias font_style="italic" uid="213" x="5855.92" y="372.162" width="18" height="18">
+					<of>Proportion_of_stopping_violence_and_control_HR</of>
+				</alias>
+				<alias color="blue" font_style="italic" uid="289" x="4875.17" y="1027" width="18" height="18">
+					<of>Initial_proportion_of_HR_case</of>
+				</alias>
+				<alias color="blue" font_style="italic" font_color="#FF007F" uid="297" x="4303.42" y="1245.66" width="18" height="18">
+					<of>Initial_value_of_IPV_criminal_cases_in_Court</of>
+				</alias>
+				<alias color="blue" font_style="italic" uid="291" x="4862.17" y="1247.67" width="18" height="18">
+					<of>Initial_proportion_of_HR_case</of>
+				</alias>
+				<alias color="blue" font_style="italic" font_color="#FF007F" uid="233" x="4765.42" y="131.662" width="18" height="18">
+					<of>Initial_value_of_IPV_criminal_cases_in_Court</of>
+				</alias>
+				<alias font_style="italic" uid="215" x="5989.92" y="611.832" width="18" height="18">
+					<of>Proportion_of_replacing_violence_with_coercive_control_LR</of>
+				</alias>
+				<alias font_style="italic" uid="217" x="5991.59" y="1013.83" width="18" height="18">
+					<of>Proportion_of_replacing_violence_with_coercive_control_LR</of>
+				</alias>
+				<alias color="blue" font_style="italic" uid="235" x="4563.09" y="618.992" width="18" height="18">
+					<of>Initial_validity_of_risk_assessment</of>
+				</alias>
+				<alias color="blue" font_style="italic" font_color="#FF007F" uid="245" x="4694.42" y="361.662" width="18" height="18">
+					<of>Initial_value_of_IPV_criminal_cases_in_Court</of>
+				</alias>
+				<alias font_style="italic" uid="271" x="5631.42" y="1241.5" width="18" height="18">
+					<of>Initial_value_of_Unconditional_release_false_negatives</of>
+				</alias>
+				<alias font_style="italic" uid="219" x="5824.92" y="615.162" width="18" height="18">
+					<of>Proportion_of_stopping_violence_and_control_LR</of>
+				</alias>
+				<alias color="blue" font_style="italic" uid="301" x="5062.75" y="646.332" width="18" height="18">
+					<of>initial_proportion_of_decision_on_detention</of>
+				</alias>
+				<alias color="blue" font_style="italic" label_side="bottom" uid="247" x="5013.75" y="1036.99" width="18" height="18">
+					<of>Initial_validity_of_risk_assessment</of>
+				</alias>
+				<alias color="blue" font_style="italic" uid="239" x="4580.09" y="1245.66" width="18" height="18">
+					<of>Initial_validity_of_risk_assessment</of>
+				</alias>
+				<alias font_style="italic" uid="221" x="6025.92" y="364.162" width="18" height="18">
+					<of>Proportion_of_replacing_violence_with_coercive_control_HR</of>
+				</alias>
+				<alias color="blue" font_style="italic" font_color="#FF007F" uid="273" x="4286.42" y="618.992" width="18" height="18">
+					<of>Initial_value_of_IPV_criminal_cases_in_Court</of>
+				</alias>
+				<alias color="blue" font_style="italic" uid="237" x="4574.75" y="1018.99" width="18" height="18">
+					<of>Initial_validity_of_risk_assessment</of>
+				</alias>
+				<alias color="blue" font_style="italic" uid="283" x="4794.84" y="334.992" width="18" height="18">
+					<of>Initial_proportion_of_HR_case</of>
+				</alias>
+				<alias color="blue" font_style="italic" uid="303" x="5052.75" y="879" width="18" height="18">
+					<of>initial_proportion_of_decision_on_detention</of>
+				</alias>
+				<alias font_style="italic" uid="261" x="5657.25" y="609.749" width="18" height="18">
+					<of>Initial_value_of_Restricted_release_false_positives</of>
+				</alias>
+				<alias font_style="italic" uid="223" x="5851.25" y="129.829" width="18" height="18">
+					<of>Proportion_of_stopping_violence_and_control_HR</of>
+				</alias>
+				<alias color="blue" font_style="italic" uid="299" x="5036.42" y="395.662" width="18" height="18">
+					<of>initial_proportion_of_decision_on_detention</of>
+				</alias>
+				<alias color="blue" font_style="italic" font_color="#FF007F" label_side="bottom" uid="255" x="4710.75" y="845" width="18" height="18">
+					<of>Initial_value_of_IPV_criminal_cases_in_Court</of>
+				</alias>
+				<alias color="blue" font_style="italic" font_color="#FF007F" label_side="bottom" uid="259" x="4742.42" y="1279.34" width="18" height="18">
+					<of>Initial_value_of_IPV_criminal_cases_in_Court</of>
+				</alias>
+				<alias color="blue" font_style="italic" font_color="#FF007F" uid="269" x="5297.84" y="308.162" width="18" height="18">
+					<of>Initial_value_of_IPV_criminal_cases_in_Court</of>
+				</alias>
+				<alias font_style="italic" uid="227" x="5839.25" y="1234.83" width="18" height="18">
+					<of>Proportion_of_stopping_violence_and_control_HR</of>
+				</alias>
+				<alias font_style="italic" uid="263" x="5651.42" y="846.5" width="18" height="18">
+					<of>Initial_value_of_Pretrial_detain_false_positives</of>
+				</alias>
+				<alias color="blue" font_style="italic" label_side="bottom" uid="249" x="5000.75" y="1257.66" width="18" height="18">
+					<of>Initial_validity_of_risk_assessment</of>
+				</alias>
+				<alias font_style="italic" uid="257" x="5690.58" y="137.329" width="18" height="18">
+					<of>Initial_value_of_Restricted_release_HR_case</of>
+				</alias>
+				<alias color="blue" font_style="italic" font_color="#FF007F" uid="251" x="4720.75" y="612.332" width="18" height="18">
+					<of>Initial_value_of_IPV_criminal_cases_in_Court</of>
+				</alias>
+				<alias font_style="italic" uid="253" x="5645.08" y="1019.08" width="18" height="18">
+					<of>Initial_value_of_Unconditional_release_LR_case</of>
+				</alias>
+				<alias font_style="italic" uid="231" x="5993.25" y="825.83" width="18" height="18">
+					<of>Proportion_of_replacing_violence_with_coercive_control_LR</of>
+				</alias>
+				<alias color="blue" font_style="italic" uid="243" x="4972.42" y="582.322" width="18" height="18">
+					<of>Initial_validity_of_risk_assessment</of>
+				</alias>
+				<alias color="blue" font_style="italic" uid="281" x="4865.84" y="104.992" width="18" height="18">
+					<of>Initial_proportion_of_HR_case</of>
+				</alias>
+				<alias color="blue" font_style="italic" uid="265" x="4941.09" y="334.992" width="18" height="18">
+					<of>Initial_validity_of_risk_assessment</of>
+				</alias>
+				<alias color="blue" font_style="italic" font_color="#FF007F" label_side="bottom" uid="293" x="4755.42" y="1058.67" width="18" height="18">
+					<of>Initial_value_of_IPV_criminal_cases_in_Court</of>
+				</alias>
+				<alias font_style="italic" uid="305" x="3819.67" y="1105.34" width="18" height="18">
+					<of>Proportion_of_stopping_violence_and_control_HR</of>
+				</alias>
+				<alias font_style="italic" uid="304" x="3834.33" y="1018.99" width="18" height="18">
+					<of>Proportion_of_stopping_violence_and_control_LR</of>
+				</alias>
+			</view>
+			<view background="white" page_width="800" page_height="600" zoom="60" home_view="true" type="interface">
+				<style/>
+				<stacked_container uid="310" x="73.3333" y="66.6667" width="203.75" height="380.417">
+					<table interval="1" report_balances="beginning" report_flows="instantaneous" x="73.3333" y="66.6667" width="203.75" height="380.417" title="IPV criminal cases in Court">
+						<item type="time"/>
+						<item>
+							<entity name="IPV_criminal_cases_in_Court"/>
+						</item>
+					</table>
+				</stacked_container>
+				<stacked_container uid="311" x="330" y="136.667" width="385" height="266.667">
+					<graph isee:graph_area_color="white" x="330" y="136.667" width="385" height="266.667" type="time_series" show_grid="false" include_units_in_legend="false" plot_numbers="false" isee:label_pie_slices="false" num_x_grid_lines="0" num_y_grid_lines="0" num_x_labels="5" num_y_labels="3" title="IPV criminal cases in Court" isee:fill_intensity="0.1" left_axis_multi_scale="false" left_axis_auto_scale="true" right_axis_multi_scale="false" right_axis_auto_scale="true">
+						<plot color="blue" pen_width="1" index="0" show_y_axis="true">
+							<entity name="IPV_criminal_cases_in_Court"/>
+						</plot>
+					</graph>
+				</stacked_container>
+			</view>
+			<view background="white" page_width="800" page_height="600" zoom="60" type="interface">
+				<style/>
+				<stacked_container uid="312" x="189.791" y="326.917" width="548.75" height="255.833">
+					<graph isee:graph_area_color="white" x="189.791" y="326.917" width="548.75" height="255.833" type="time_series" show_grid="false" include_units_in_legend="false" plot_numbers="false" isee:label_pie_slices="false" num_x_grid_lines="0" num_y_grid_lines="0" num_x_labels="2" num_y_labels="5" title="Case type" isee:fill_intensity="0.1" to="2020" from="2007" left_axis_multi_scale="false" left_axis_auto_scale="true" right_axis_multi_scale="false" right_axis_auto_scale="true">
+						<plot color="#FFAAFF" pen_style="dashed" title="FP HR (V=.56 achieved by learning)" pen_width="1" index="0" show_y_axis="true">
+							<entity name="False_positive"/>
+						</plot>
+						<plot color="red" title="FP HR (V=.95 achieved by learning)" pen_width="1" index="1" show_y_axis="true">
+							<entity name="False_positive"/>
+						</plot>
+						<plot color="#AAFF7F" pen_style="dashed" title="FP LR (V=.56 achieved by learning)" pen_width="1" index="2" show_y_axis="true">
+							<entity name="False_negative"/>
+						</plot>
+						<plot color="#00AA00" title="FP LR (V=.95 achieved by learning)" pen_width="1" index="3" show_y_axis="true">
+							<entity name="False_negative"/>
+						</plot>
+					</graph>
+				</stacked_container>
+				<text_box font_size="16pt" uid="313" x="26.6666" y="22.2501" width="748.333" height="28">Comparing results of data simulation (low vs. high learning from error from error) final validity: .95 vs. .56
+</text_box>
+				<stacked_container uid="314" x="189.791" y="58.5834" width="548.75" height="255.833">
+					<graph isee:graph_area_color="white" x="189.791" y="58.5834" width="548.75" height="255.833" type="time_series" show_grid="false" include_units_in_legend="false" plot_numbers="false" isee:label_pie_slices="false" num_x_grid_lines="0" num_y_grid_lines="0" num_x_labels="2" num_y_labels="5" title="Case type" isee:fill_intensity="0.1" to="2020" from="2007" left_axis_multi_scale="false" left_axis_auto_scale="true" right_axis_multi_scale="false" right_axis_auto_scale="true">
+						<plot color="#FFAAFF" pen_style="dashed" title="HR (V=.56 achieved by learning)" pen_width="1" index="0" show_y_axis="true">
+							<entity name="HR_case"/>
+						</plot>
+						<plot color="red" title="HR (V=.95 achieved by learning) " pen_width="1" index="1" show_y_axis="true">
+							<entity name="HR_case"/>
+						</plot>
+						<plot color="#AAFF7F" pen_style="dashed" title="LR (V=.56 achieved by learning)" pen_width="1" index="2" show_y_axis="true">
+							<entity name="LR_case"/>
+						</plot>
+						<plot color="#008F44" title="LR (V=.95 achieved by learning)" pen_width="1" index="3" show_y_axis="true">
+							<entity name="LR_case"/>
+						</plot>
+					</graph>
+				</stacked_container>
+			</view>
+			<view background="white" page_width="800" page_height="600" zoom="60" type="interface">
+				<style/>
+				<text_box font_size="16pt" uid="315" x="105.292" y="30.5834" width="635.331" height="29.6666">Comparing results of data simulation (RA Validity = .95 vs. RA Validity .56 vs. Baseline)</text_box>
+				<stacked_container uid="316" x="64.9996" y="125.25" width="642.583" height="434.751">
+					<graph isee:graph_area_color="white" x="64.9996" y="125.25" width="642.583" height="434.751" type="time_series" show_grid="false" include_units_in_legend="false" plot_numbers="false" isee:label_pie_slices="false" num_x_grid_lines="0" num_y_grid_lines="0" num_x_labels="2" num_y_labels="5" title="# of Cases" isee:fill_intensity="0.1" to="2020" from="2007" left_axis_multi_scale="false" left_axis_auto_scale="true" right_axis_multi_scale="false" right_axis_auto_scale="true">
+						<plot color="red" title="IPV criminal
+cases in Court (v=.95 achieved by learning)" pen_width="1" index="0" show_y_axis="true">
+							<entity name="IPV_criminal_cases_in_Court"/>
+							<isee:data name="Run 1"/>
+						</plot>
+						<plot color="#55FF00" title="IPV criminal
+cases in Court (V=.56 achieved by learning)" pen_width="1" index="1" show_y_axis="true">
+							<entity name="IPV_criminal_cases_in_Court"/>
+						</plot>
+						<plot color="fuchsia" pen_style="dot_dashed" title="Baseline" pen_width="1" index="2" show_y_axis="true">
+							<entity name="IPV_criminal_cases_in_Court"/>
+						</plot>
+					</graph>
+				</stacked_container>
+			</view>
+			<view background="white" page_width="800" page_height="600" zoom="60" type="interface">
+				<style/>
+				<text_box font_size="16pt" uid="317" x="105.292" y="30.5834" width="591.997" height="31.3333">Comparing results of data simulation (RA Validity = .95 vs. RA Validity .56 )</text_box>
+				<stacked_container uid="318" x="31.6663" y="86.9167" width="747.583" height="473.084">
+					<graph isee:graph_area_color="white" x="31.6663" y="86.9167" width="747.583" height="473.084" type="time_series" show_grid="false" include_units_in_legend="false" plot_numbers="false" isee:label_pie_slices="false" num_x_grid_lines="0" num_y_grid_lines="0" num_x_labels="2" num_y_labels="5" title="IPV criminal cases in Court" isee:fill_intensity="0.1" to="2020" from="2007" left_axis_multi_scale="false" left_axis_auto_scale="true" right_axis_multi_scale="false" right_axis_auto_scale="true">
+						<plot color="red" title="IPV criminal
+cases in Court (v=.95 achieved by learning)" pen_width="1" index="0" show_y_axis="true">
+							<entity name="IPV_criminal_cases_in_Court"/>
+						</plot>
+						<plot color="#55FF00" title="IPV criminal
+cases in Court (V=.56 achieved by learning)" pen_width="1" index="1" show_y_axis="true">
+							<entity name="IPV_criminal_cases_in_Court"/>
+						</plot>
+						<plot color="fuchsia" pen_style="dot_dashed" title="Decrease resentment &amp; Increase deterrence" pen_width="1" index="2" show_y_axis="true">
+							<entity name="IPV_criminal_cases_in_Court"/>
+						</plot>
+					</graph>
+				</stacked_container>
+			</view>
+			<isee:templates>
+				<view background="white" page_width="800" page_height="600" type="template">
+					<style/>
+				</view>
+			</isee:templates>
+			<isee:stories/>
+		</views>
+	</model>
+</xmile>
+
